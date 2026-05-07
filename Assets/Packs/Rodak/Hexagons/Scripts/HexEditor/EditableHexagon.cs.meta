@@ -1,9 +1,0 @@
-fileFormatVersion: 2
-guid: 0412d084f6942334892462c738f8638f
-AssetOrigin:
-  serializedVersion: 1
-  productId: 345388
-  packageName: Just Hexagons
-  packageVersion: 1.0
-  assetPath: Assets/Rodak/Hexagons/Scripts/HexEditor/EditableHexagon.cs
-  uploadId: 867610
