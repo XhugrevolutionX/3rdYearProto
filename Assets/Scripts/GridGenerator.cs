@@ -6,10 +6,18 @@ using UnityEngine;
 public class HexGrid : MonoBehaviour
 {
     [SerializeField] private GameObject hexPrefab;
-    [SerializeField] private float hexSize = 1f;
     [SerializeField] private int radius = 5;
+    [SerializeField] private Color[] palette = { Color.white };
 
+    private float _hexSize;
     private readonly Dictionary<Hex, GameObject> _cells = new();
+    void Awake()
+    {
+        var mf = hexPrefab.GetComponentInChildren<MeshFilter>();
+        var b = mf.sharedMesh.bounds;
+        var scale = hexPrefab.transform.localScale;
+        _hexSize = Mathf.Max(b.extents.x * scale.x, b.extents.z * scale.z);
+    }
 
     void Start()
     {
@@ -26,12 +34,23 @@ public class HexGrid : MonoBehaviour
             for (int r = r1; r <= r2; r++)
             {
                 var hex = new Hex(q, r);
-                var pos = HexLayout.HexToWorld(hex, hexSize);
+                var pos = HexLayout.HexToWorld(hex, _hexSize);
                 var cell = Instantiate(hexPrefab, pos, hexPrefab.transform.rotation, transform);
                 cell.name = $"Hex({q},{r})";
+                ApplyRandomColor(cell);
                 _cells[hex] = cell;
             }
         }
+    }
+
+    private void ApplyRandomColor(GameObject cell)
+    {
+        if (palette.Length == 0) return;
+        var rend = cell.GetComponentInChildren<Renderer>();
+        if (rend == null) return;
+        var mat = new Material(rend.sharedMaterial);
+        mat.color = palette[Random.Range(0, palette.Length)];
+        rend.sharedMaterial = mat;
     }
 
     public GameObject GetCell(Hex hex) =>
