@@ -11,12 +11,10 @@ public class HexGrid : MonoBehaviour
 
     private float _hexSize;
     private readonly Dictionary<Hex, GameObject> _cells = new();
+
     void Awake()
     {
-        var mf = hexPrefab.GetComponentInChildren<MeshFilter>();
-        var b = mf.sharedMesh.bounds;
-        var scale = hexPrefab.transform.localScale;
-        _hexSize = Mathf.Max(b.extents.x * scale.x, b.extents.z * scale.z);
+        ComputeHexSize();
     }
 
     void Start()
@@ -24,9 +22,19 @@ public class HexGrid : MonoBehaviour
         GenerateGrid();
     }
 
-    void GenerateGrid()
+    private void ComputeHexSize()
     {
-        // Generates a filled hexagonal map of the given radius
+        var mf = hexPrefab.GetComponentInChildren<MeshFilter>();
+        var b = mf.sharedMesh.bounds;
+        var scale = hexPrefab.transform.localScale;
+        _hexSize = Mathf.Max(b.extents.x * scale.x, b.extents.z * scale.z);
+    }
+
+    public void GenerateGrid()
+    {
+        ClearGrid();
+        if (_hexSize == 0f) ComputeHexSize();
+
         for (int q = -radius; q <= radius; q++)
         {
             int r1 = Mathf.Max(-radius, -q - radius);
@@ -41,6 +49,13 @@ public class HexGrid : MonoBehaviour
                 _cells[hex] = cell;
             }
         }
+    }
+
+    public void ClearGrid()
+    {
+        for (int i = transform.childCount - 1; i >= 0; i--)
+            DestroyImmediate(transform.GetChild(i).gameObject);
+        _cells.Clear();
     }
 
     private void ApplyRandomColor(GameObject cell)
