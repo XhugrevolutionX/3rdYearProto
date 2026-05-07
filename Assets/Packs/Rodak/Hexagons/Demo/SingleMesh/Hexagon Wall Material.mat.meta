@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ff6d22eadbf940043a51acd65e4dc23b
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 345388
+  packageName: Just Hexagons
+  packageVersion: 1.0
+  assetPath: Assets/Rodak/Hexagons/Demo/SingleMesh/Hexagon Wall Material.mat
+  uploadId: 867610

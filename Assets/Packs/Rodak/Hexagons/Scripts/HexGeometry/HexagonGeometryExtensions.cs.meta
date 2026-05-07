@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 01bd8f96b845e624288c91d38f1a270b
+AssetOrigin:
+  serializedVersion: 1
+  productId: 345388
+  packageName: Just Hexagons
+  packageVersion: 1.0
+  assetPath: Assets/Rodak/Hexagons/Scripts/HexGeometry/HexagonGeometryExtensions.cs
+  uploadId: 867610

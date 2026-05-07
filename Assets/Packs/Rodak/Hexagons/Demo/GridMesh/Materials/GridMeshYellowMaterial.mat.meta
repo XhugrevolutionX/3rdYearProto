@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7a70b92bdc12a604e80e1c51f6f674fc
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 345388
+  packageName: Just Hexagons
+  packageVersion: 1.0
+  assetPath: Assets/Rodak/Hexagons/Demo/GridMesh/Materials/GridMeshYellowMaterial.mat
+  uploadId: 867610

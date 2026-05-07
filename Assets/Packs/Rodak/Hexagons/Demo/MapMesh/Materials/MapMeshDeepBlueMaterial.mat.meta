@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: baca60c1b26f3a1b5b61ed9e72d7806d
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 345388
+  packageName: Just Hexagons
+  packageVersion: 1.0
+  assetPath: Assets/Rodak/Hexagons/Demo/MapMesh/Materials/MapMeshDeepBlueMaterial.mat
+  uploadId: 867610

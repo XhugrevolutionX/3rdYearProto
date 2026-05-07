@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: bf162c9768e17df44af8b2ace1963478
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 345388
+  packageName: Just Hexagons
+  packageVersion: 1.0
+  assetPath: Assets/Rodak/Hexagons/Demo/GridMesh/Materials/GridMeshDeepBlueMaterial.mat
+  uploadId: 867610

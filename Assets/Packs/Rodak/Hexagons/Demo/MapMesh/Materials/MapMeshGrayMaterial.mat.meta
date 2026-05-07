@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: de7c5d5307256169c9531daaeaf7936a
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 345388
+  packageName: Just Hexagons
+  packageVersion: 1.0
+  assetPath: Assets/Rodak/Hexagons/Demo/MapMesh/Materials/MapMeshGrayMaterial.mat
+  uploadId: 867610

@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: ab8e837282207be4b94f0b4835f8414b
+AssetOrigin:
+  serializedVersion: 1
+  productId: 345388
+  packageName: Just Hexagons
+  packageVersion: 1.0
+  assetPath: Assets/Rodak/Hexagons/Scripts/HexEditor/EditableHexagonDrawer.cs
+  uploadId: 867610
