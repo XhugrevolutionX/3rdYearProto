@@ -12,13 +12,14 @@ public class Movement : MonoBehaviour
     protected Rigidbody _rb;
     protected Vector2 _direction;
 
-    private void Update() => RotateView();
+    protected virtual void Awake() => _rb = GetComponent<Rigidbody>();
 
-    private void FixedUpdate() => Move();
-    
-    private void Move() => _rb.linearVelocity = new Vector3(_direction.x * speed, _rb.linearVelocity.y, _direction.y * speed);
-    
-    
+    protected virtual void Update() => RotateView();
+
+    protected virtual void FixedUpdate() => Move();
+
+    protected void Move() => _rb.linearVelocity = new Vector3(_direction.x * speed, _rb.linearVelocity.y, _direction.y * speed);
+
     private void RotateView()
     {
         if (_direction.sqrMagnitude < 0.01f) return;

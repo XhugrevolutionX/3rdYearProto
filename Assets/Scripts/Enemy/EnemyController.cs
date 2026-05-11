@@ -2,15 +2,40 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [Header("Detection")]
+    [SerializeField] private float detectionRadius = 10f;
+    [SerializeField] private LayerMask playerMask;
+
+    public EnemyMovement Movement { get; private set; }
+    public Transform PlayerTransform { get; private set; }
+
+    private AIStateMachine _stateMachine;
+
+    private void Start()
     {
+        Movement = GetComponent<EnemyMovement>();
         
+        _stateMachine = new AIStateMachine();
+        _stateMachine.Init(new IdleState(this, _stateMachine));
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        DetectPlayer();
+        _stateMachine.Update();
+    }
+
+    private void FixedUpdate() => _stateMachine.FixedUpdate();
+
+    private void DetectPlayer()
+    {
+        Collider[] hits = Physics.OverlapSphere(transform.position, detectionRadius, playerMask);
+        PlayerTransform = hits.Length > 0 ? hits[0].transform : null;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, detectionRadius);
     }
 }

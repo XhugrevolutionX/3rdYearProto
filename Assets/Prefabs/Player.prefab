@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6232487642596597557}
   - component: {fileID: 4033788012362864995}
   - component: {fileID: 5577584621497500263}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,8 +51,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement_Networked
   viewTransform: {fileID: 3985088581997925639}
   speed: 10
-  jumpForce: 20
   rotationSpeed: 10
+  jumpForce: 20
   groundMask:
     serializedVersion: 2
     m_Bits: 64
@@ -220,7 +220,7 @@ GameObject:
   - component: {fileID: 1977880738628833706}
   - component: {fileID: 3773382469229888103}
   - component: {fileID: 2097906525217854102}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -331,7 +331,7 @@ GameObject:
   - component: {fileID: 3985088581997925639}
   - component: {fileID: 4972298839315341031}
   - component: {fileID: 7703523865036521940}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Render
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -421,7 +421,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4297703263192393369}
   - component: {fileID: 1577331775710151604}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
