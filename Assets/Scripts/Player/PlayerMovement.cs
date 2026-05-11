@@ -1,17 +1,12 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : Movement
 {
-    [Header("References")] 
-    [SerializeField] private Transform viewTransform;
-    
-    [Header("Parameters")]
-    [SerializeField] private float speed = 5f;
+    [Header("Jump")]
+    [Tooltip("Amount of jump force")]
     [SerializeField] private float jumpForce = 10f;
-    [SerializeField] private float rotationSpeed = 10f;
     
-    [Header("Ground Check")]
     [Tooltip("The mask on what the player is grounded")]
     [SerializeField] private LayerMask groundMask;
     
@@ -21,33 +16,9 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("The maximum distance for the sphere cast")]
     [SerializeField] private float sphereMaxDistance;
 
-    private Rigidbody _rb;
-
-    private Vector2 _direction;
-
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
-    }
-
-    private void FixedUpdate()
-    {
-        Move();
-    }
-
-    private void Move()
-    {
-        _rb.linearVelocity = new Vector3(_direction.x * speed, _rb.linearVelocity.y, _direction.y * speed);
-        RotateView();
-    }
-
-    private void RotateView()
-    {
-        if (_direction.sqrMagnitude < 0.01f) return;
-
-        Vector3 moveDir = new Vector3(_direction.x, 0f, _direction.y);
-        Quaternion targetRotation = Quaternion.LookRotation(moveDir);
-        viewTransform.rotation = Quaternion.Slerp(viewTransform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
     }
     
     private void Jump()
