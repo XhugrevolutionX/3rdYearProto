@@ -412,8 +412,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4f629ff2b9e11e4daef2615335c2334, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HexGrid
+  gridType: 2
   hexPrefab: {fileID: 4607935269465202273, guid: 8abd4bdf33207e24d9e0f7f7d126e28b, type: 3}
-  radius: 10
+  hexRadius: 5
+  squarePrefab: {fileID: 4362587521299224124, guid: 0c9c3c104c6217d47b4e126a90f59372, type: 3}
+  squareColumns: 10
+  squareRows: 10
+  octagonPrefab: {fileID: 0}
+  octagonFillPrefab: {fileID: 0}
+  octagonRadius: 5
   palette:
   - {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   - {r: 1, g: 0.2705882, b: 0, a: 1}
