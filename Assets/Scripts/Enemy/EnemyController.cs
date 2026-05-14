@@ -21,11 +21,14 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
-        DetectPlayer();
         _stateMachine.Update();
     }
 
-    private void FixedUpdate() => _stateMachine.FixedUpdate();
+    private void FixedUpdate()
+    {
+        _stateMachine.FixedUpdate();
+        DetectPlayer();
+    }
 
     private void DetectPlayer()
     {
