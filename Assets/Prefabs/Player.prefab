@@ -55,7 +55,7 @@ MonoBehaviour:
   jumpForce: 20
   groundMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 192
   sphereRadius: 0.4
   sphereMaxDistance: 0.7
 --- !u!114 &6232487642596597557
