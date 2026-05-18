@@ -19,7 +19,7 @@ public class EnemyController : Controller
 
     private AIStateMachine _stateMachine;
 
-    private void Start()
+    protected virtual void Start()
     {
         Movement = GetComponent<EnemyMovement>();
         

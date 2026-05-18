@@ -10,7 +10,7 @@ public class PlayerController : Controller
     [SerializeField] private float raycastDistance = 1.5f;
     [SerializeField] private LayerMask areaMask;
 
-    private PlayerDisplay _playerDisplay;
+    private TypeDisplay typeDisplay;
     private List<TypeColor> _unlockedTypes = new();
     private int _typeIndex;
 
@@ -18,14 +18,14 @@ public class PlayerController : Controller
     private TypeColor SelectedType
     {
         get => _selectedType;
-        set { _selectedType = value; _playerDisplay?.SetType(Type); }
+        set { _selectedType = value; typeDisplay?.SetType(Type); }
     }
 
     private TypeColor _areaType = TypeColor.WHITE;
     private TypeColor AreaType
     {
         get => _areaType;
-        set { _areaType = value; if (_selectedType == TypeColor.WHITE) _playerDisplay?.SetType(Type); }
+        set { _areaType = value; if (_selectedType == TypeColor.WHITE) typeDisplay?.SetType(Type); }
     }
 
     public override TypeColor Type => _selectedType == TypeColor.WHITE ? _areaType : _selectedType;
@@ -37,7 +37,7 @@ public class PlayerController : Controller
 
     private void Start()
     {
-        _playerDisplay = GetComponent<PlayerDisplay>();
+        typeDisplay = GetComponent<TypeDisplay>();
         _unlockedTypes.Add(TypeColor.WHITE);
     }
 
@@ -59,7 +59,7 @@ public class PlayerController : Controller
 
     protected override void Attack()
     {
-        _playerDisplay.Attack();
+        typeDisplay.Attack();
         StartCoroutine(AttackRoutine());
     }
 

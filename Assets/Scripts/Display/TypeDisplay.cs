@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerDisplay : Display
+public class TypeDisplay : Display
 {
     [Header("Player References")]
     [SerializeField] private Renderer characterRenderer;
