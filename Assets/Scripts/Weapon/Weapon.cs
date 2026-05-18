@@ -5,6 +5,11 @@ public class Weapon : MonoBehaviour
     [Header("References")]
     [SerializeField] private Controller controller;
 
+    [Header("Knockback")]
+    [SerializeField] private float knockBackForce;
+    [SerializeField] private float knockBackUpForce;
+    [SerializeField] private float knockBackDuration;
+
     private void Awake()
     {
         if (!controller) controller = GetComponentInParent<Controller>();
@@ -12,17 +17,17 @@ public class Weapon : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Health health = GetHealthComponent(other.gameObject);
-        
-        if(health) health.ChangeHealth(-controller.AttackDamage);
-    }
-    
-    private Health GetHealthComponent(GameObject target)
-    {
-        if(target.TryGetComponent(out Health health))
-            return health;
-        if (target.transform.parent)
-            return GetHealthComponent(target.transform.parent.gameObject);
-        return null;
+        Health health = other.GetComponentInParent<Health>();
+        if (!health) return;
+
+        health.ChangeHealth(-controller.AttackDamage);
+
+        Movement movement = other.GetComponentInParent<Movement>();
+        if (movement)
+        {
+            Vector3 direction = (other.transform.position - controller.transform.position).normalized;
+            direction.y = knockBackUpForce;
+            movement.KnockBack(direction, knockBackForce, knockBackDuration);
+        }
     }
 }

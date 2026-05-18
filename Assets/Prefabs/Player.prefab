@@ -48,6 +48,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Weapon
   controller: {fileID: 4002557608948094580}
+  knockBackForce: 15
+  knockBackUpForce: 1
+  knockBackDuration: 2
 --- !u!135 &5875311098440862696
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -194,6 +197,7 @@ MonoBehaviour:
   viewTransform: {fileID: 3985088581997925639}
   speed: 10
   rotationSpeed: 3
+  knockBackResistance: 5
   jumpForce: 20
   groundMask:
     serializedVersion: 2
