@@ -5,15 +5,33 @@ using UnityEngine.InputSystem;
 public class PlayerController : Controller
 {
     public static PlayerController playerController;
-    
+
+    [Header("Area Detection")]
+    [SerializeField] private float raycastDistance = 1.5f;
+    [SerializeField] private LayerMask areaMask;
+
     private PlayerDisplay _playerDisplay;
-    
     private List<TypeColor> _unlockedTypes = new();
-    
     private int _typeIndex;
 
+    private TypeColor _selectedType = TypeColor.WHITE;
+    private TypeColor SelectedType
+    {
+        get => _selectedType;
+        set { _selectedType = value; _playerDisplay?.SetType(Type); }
+    }
+
+    private TypeColor _areaType = TypeColor.WHITE;
+    private TypeColor AreaType
+    {
+        get => _areaType;
+        set { _areaType = value; if (_selectedType == TypeColor.WHITE) _playerDisplay?.SetType(Type); }
+    }
+
+    public override TypeColor Type => _selectedType == TypeColor.WHITE ? _areaType : _selectedType;
+
     private void Awake() => playerController = this;
-    
+
     private void Start()
     {
         _playerDisplay = GetComponent<PlayerDisplay>();
@@ -24,14 +42,14 @@ public class PlayerController : Controller
 
     public void OnAttack(InputAction.CallbackContext context)
     {
-        if(context.started && canAttack) Attack();
+        if (context.started && canAttack) Attack();
     }
 
     public void OnSwitch(InputAction.CallbackContext context)
     {
         if (!context.started) return;
         _typeIndex = (_typeIndex + 1) % _unlockedTypes.Count;
-        SwitchType(_unlockedTypes[_typeIndex]);
+        SelectedType = _unlockedTypes[_typeIndex];
     }
 
     #endregion
@@ -40,13 +58,6 @@ public class PlayerController : Controller
     {
         _playerDisplay.Attack();
         StartCoroutine(AttackRoutine());
-    }
-
-    public void SwitchType(TypeColor newType)
-    {
-        type = newType;
-        _playerDisplay.SetType(newType);
-        Debug.Log($"Switch color type : {type}");
     }
 
     public void AddType(TypeColor newType)
@@ -58,6 +69,26 @@ public class PlayerController : Controller
     {
         _unlockedTypes.RemoveAll(t => t != TypeColor.WHITE);
         _typeIndex = 0;
-        SwitchType(TypeColor.WHITE);
+        SelectedType = TypeColor.WHITE;
     }
+
+    private Collider _lastAreaCollider;
+
+    private void FixedUpdate()
+    {
+        TypeColor detected = TypeColor.WHITE;
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, raycastDistance, areaMask))
+        {
+            if (hit.collider != _lastAreaCollider)
+            {
+                _lastAreaCollider = hit.collider;
+                _cachedArea = hit.collider.GetComponent<Area>();
+            }
+            if (_cachedArea) detected = _cachedArea.Type;
+        }
+        else _lastAreaCollider = null;
+        AreaType = detected;
+    }
+
+    private Area _cachedArea;
 }
