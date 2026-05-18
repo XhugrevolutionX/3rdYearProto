@@ -5,7 +5,7 @@ public class Weapon : MonoBehaviour
     [Header("References")]
     [SerializeField] private Controller controller;
 
-    [Header("Knockback")]
+    [Header("KnockBack")]
     [SerializeField] private float knockBackForce;
     [SerializeField] private float knockBackUpForce;
     [SerializeField] private float knockBackDuration;
