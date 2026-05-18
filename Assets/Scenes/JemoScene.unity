@@ -2247,6 +2247,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4294088483137381760, guid: 2368793af343e7249a9582a1ee4ee512, type: 3}
+      propertyPath: MaxHealth
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6549702727860710937, guid: 2368793af343e7249a9582a1ee4ee512, type: 3}
       propertyPath: playerMask.m_Bits
       value: 8
@@ -2271,6 +2275,10 @@ PrefabInstance:
     - target: {fileID: 2833167095438190592, guid: 88756b67da3d1364fbf7d6638ae34908, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3867011284375230144, guid: 88756b67da3d1364fbf7d6638ae34908, type: 3}
+      propertyPath: MaxHealth
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4673796558659913919, guid: 88756b67da3d1364fbf7d6638ae34908, type: 3}
       propertyPath: m_LocalPosition.x

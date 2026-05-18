@@ -342,6 +342,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef7db0b0e9cafbe48b9d00595d6f55e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
+  attackDamage: 1
+  attackCooldown: 0.5
+  contactDamage: 1
+  knockBackForce: 15
+  knockBackUpForce: 1
+  knockBackDuration: 0.5
   detectionRadius: 10
   playerMask:
     serializedVersion: 2
@@ -372,8 +378,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
   viewTransform: {fileID: 6463213456214380959}
-  speed: 5
+  speed: 4
   rotationSpeed: 3
+  knockBackResistance: 5
 --- !u!114 &4684961557870353174
 MonoBehaviour:
   m_ObjectHideFlags: 0

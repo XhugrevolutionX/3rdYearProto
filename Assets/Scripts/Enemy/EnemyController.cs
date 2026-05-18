@@ -1,7 +1,15 @@
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : Controller
 {
+    [Header("Enemy Parameters")]
+    [SerializeField] private int contactDamage = 1;
+
+    [Header("KnockBack")]
+    [SerializeField] private float knockBackForce = 10f;
+    [SerializeField] private float knockBackUpForce = 1f;
+    [SerializeField] private float knockBackDuration = 0.5f;
+    
     [Header("Detection")]
     [SerializeField] private float detectionRadius = 10f;
     [SerializeField] private LayerMask playerMask;
@@ -40,5 +48,26 @@ public class EnemyController : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        PlayerHealth playerHealth = collision.gameObject.GetComponentInParent<PlayerHealth>();
+        if (!playerHealth) return;
+
+        playerHealth.ChangeHealth(-contactDamage);
+
+        Movement movement = collision.gameObject.GetComponentInParent<Movement>();
+        if (movement)
+        {
+            Vector3 direction = (collision.transform.position - transform.position).normalized;
+            direction.y = knockBackUpForce;
+            movement.KnockBack(direction, knockBackForce, knockBackDuration);
+        }
+    }
+
+    protected override void Attack()
+    {
+        Debug.Log("Enemy Attacking");
     }
 }

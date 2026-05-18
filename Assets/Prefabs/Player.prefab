@@ -139,6 +139,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4673796558659913919}
   - component: {fileID: 4002557608948094580}
+  - component: {fileID: 3867011284375230144}
   - component: {fileID: 2580833051618206382}
   - component: {fileID: 6395180872081267730}
   - component: {fileID: 6232487642596597557}
@@ -182,6 +183,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   attackDamage: 1
   attackCooldown: 0.5
+--- !u!114 &3867011284375230144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2833167095438190592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e83392c49fa190d45a9f0928749ce564, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  MaxHealth: 10
 --- !u!114 &2580833051618206382
 MonoBehaviour:
   m_ObjectHideFlags: 0
