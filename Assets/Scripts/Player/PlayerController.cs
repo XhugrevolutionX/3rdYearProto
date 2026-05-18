@@ -1,8 +1,13 @@
-using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : Controller
 {
+    private Display _display;
+
+    private void Start()
+    {
+        _display = GetComponent<Display>();
+    }
     public void OnAttack(InputAction.CallbackContext context)
     {
         if(context.started && canAttack) Attack();
@@ -10,7 +15,7 @@ public class PlayerController : Controller
     
     protected override void Attack()
     {
-        Debug.Log("Player attack");
+        _display.Attack();
         StartCoroutine(AttackRoutine());
     }
 }
