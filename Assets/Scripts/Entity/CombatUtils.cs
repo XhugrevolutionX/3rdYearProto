@@ -9,20 +9,20 @@ public struct KnockBackData
 
 public static class CombatUtils
 {
-    public static void ApplyHit(GameObject target, Transform source, TypeColor attackerType, int damage, KnockBackData knockBack)
+    public static void ApplyHit(GameObject target, Controller attacker, int damage, KnockBackData knockBack)
     {
         Health health = target.GetComponentInParent<Health>();
         if (!health) return;
 
         Controller targetController = target.GetComponentInParent<Controller>();
-        if (targetController != null && targetController.Type == attackerType) damage *= 2;
+        if (attacker.HasTypeDamageBonus && targetController != null && targetController.Type == attacker.Type) damage *= 2;
 
         health.ChangeHealth(-damage);
 
         Movement movement = target.GetComponentInParent<Movement>();
         if (!movement) return;
 
-        Vector3 direction = (target.transform.position - source.position).normalized;
+        Vector3 direction = (target.transform.position - attacker.transform.position).normalized;
         direction.y = knockBack.UpForce;
         movement.KnockBack(direction, knockBack.Force, knockBack.Duration);
     }

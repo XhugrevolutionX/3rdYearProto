@@ -17,11 +17,9 @@ public class Weapon : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        CombatUtils.ApplyHit(
-            other.gameObject, 
-            controller.transform,
-            controller.Type,
-            controller.AttackDamage, 
+        CombatUtils.ApplyHit(other.gameObject, 
+            controller, 
+            controller.AttackDamage,
             new KnockBackData { Force = knockBackForce, UpForce = knockBackUpForce, Duration = knockBackDuration }
         );
     }
