@@ -6,7 +6,7 @@ public class PlayerController : Controller
 {
     public static PlayerController playerController;
     
-    private Display _display;
+    private PlayerDisplay _playerDisplay;
     
     private List<TypeColor> _unlockedTypes = new();
     
@@ -16,7 +16,7 @@ public class PlayerController : Controller
     
     private void Start()
     {
-        _display = GetComponent<Display>();
+        _playerDisplay = GetComponent<PlayerDisplay>();
         _unlockedTypes.Add(TypeColor.WHITE);
     }
 
@@ -38,13 +38,14 @@ public class PlayerController : Controller
 
     protected override void Attack()
     {
-        _display.Attack();
+        _playerDisplay.Attack();
         StartCoroutine(AttackRoutine());
     }
 
     public void SwitchType(TypeColor newType)
     {
         type = newType;
+        _playerDisplay.SetType(newType);
         Debug.Log($"Switch color type : {type}");
     }
 

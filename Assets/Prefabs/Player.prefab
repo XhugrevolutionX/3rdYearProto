@@ -141,7 +141,7 @@ GameObject:
   - component: {fileID: 4002557608948094580}
   - component: {fileID: 3867011284375230144}
   - component: {fileID: 2580833051618206382}
-  - component: {fileID: 6395180872081267730}
+  - component: {fileID: 5617554649318947200}
   - component: {fileID: 6232487642596597557}
   - component: {fileID: 4033788012362864995}
   - component: {fileID: 5577584621497500263}
@@ -220,7 +220,7 @@ MonoBehaviour:
     m_Bits: 192
   sphereRadius: 0.4
   sphereMaxDistance: 0.7
---- !u!114 &6395180872081267730
+--- !u!114 &5617554649318947200
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -229,9 +229,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 2833167095438190592}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebd9b08451659c240a6ddc6a775308f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d51a18e71a38df4eaddacefb5ca362d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Display
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDisplay
+  characterRenderer: {fileID: 3098837822292196384}
+  whiteColor: {r: 1, g: 1, b: 1, a: 1}
+  redColor: {r: 1, g: 0, b: 0, a: 1}
+  greenColor: {r: 0, g: 1, b: 0, a: 1}
+  blueColor: {r: 0, g: 0, b: 1, a: 1}
+  yellowColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  orangeColor: {r: 1, g: 0.5, b: 0, a: 1}
+  purpleColor: {r: 0.5, g: 0, b: 0.5, a: 1}
 --- !u!114 &6232487642596597557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -389,6 +397,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b1499f8a-07b1-4f9b-8ee2-d07fa269e23a
+    m_ActionName: 'Player/Switch[/Mouse/rightButton]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: 

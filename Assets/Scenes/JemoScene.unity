@@ -1564,7 +1564,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7155332956272921486, guid: 4ebb76bfe9709124f9042f640a7e9b3c, type: 3}
       propertyPath: type
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7720923372761170549, guid: 4ebb76bfe9709124f9042f640a7e9b3c, type: 3}
       propertyPath: m_Pivot.x
@@ -3368,6 +3368,18 @@ PrefabInstance:
     - target: {fileID: 5577584621497500263, guid: 88756b67da3d1364fbf7d6638ae34908, type: 3}
       propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5617554649318947200, guid: 88756b67da3d1364fbf7d6638ae34908, type: 3}
+      propertyPath: purpleColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5617554649318947200, guid: 88756b67da3d1364fbf7d6638ae34908, type: 3}
+      propertyPath: purpleColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5617554649318947200, guid: 88756b67da3d1364fbf7d6638ae34908, type: 3}
+      propertyPath: purpleColor.r
+      value: 0.6566658
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
