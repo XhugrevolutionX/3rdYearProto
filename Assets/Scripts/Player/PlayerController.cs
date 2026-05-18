@@ -32,6 +32,9 @@ public class PlayerController : Controller
 
     private void Awake() => playerController = this;
 
+    private void OnEnable()  => MiniBossHealth.OnDeath += AddType;
+    private void OnDisable() => MiniBossHealth.OnDeath -= AddType;
+
     private void Start()
     {
         _playerDisplay = GetComponent<PlayerDisplay>();
@@ -73,6 +76,7 @@ public class PlayerController : Controller
     }
 
     private Collider _lastAreaCollider;
+    private Area _cachedArea;
 
     private void FixedUpdate()
     {
@@ -89,6 +93,4 @@ public class PlayerController : Controller
         else _lastAreaCollider = null;
         AreaType = detected;
     }
-
-    private Area _cachedArea;
 }
