@@ -15,12 +15,12 @@ public enum TypeColor
 public abstract class Controller : MonoBehaviour
 {
     [Header("Parameters")]
-    [SerializeField] private TypeColor type = TypeColor.WHITE;
+    [SerializeField] protected TypeColor type = TypeColor.WHITE;
     [SerializeField] private bool typeDamageBonus;
     [SerializeField] private int attackDamage = 1;
     [SerializeField] private float attackCooldown = 0.5f;
 
-    public TypeColor Type => type;
+    public virtual TypeColor Type => type;
     public bool HasTypeDamageBonus => typeDamageBonus;
     public int AttackDamage => attackDamage;
 
