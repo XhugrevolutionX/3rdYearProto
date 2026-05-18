@@ -181,6 +181,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fbb078f2286d1e4a96f6c1eec974f3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  type: 0
+  typeDamageBonus: 1
   attackDamage: 1
   attackCooldown: 0.5
 --- !u!114 &3867011284375230144

@@ -52,7 +52,7 @@ public class EnemyController : Controller
 
     private void OnCollisionEnter(Collision collision)
     {
-        CombatUtils.ApplyHit(collision.gameObject, 
+        CombatUtils.ApplyHit<PlayerHealth>(collision.gameObject,
             this, 
             contactDamage,
             new KnockBackData { Force = knockBackForce, UpForce = knockBackUpForce, Duration = knockBackDuration }

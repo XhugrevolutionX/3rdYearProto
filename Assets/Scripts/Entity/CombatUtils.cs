@@ -9,13 +9,15 @@ public struct KnockBackData
 
 public static class CombatUtils
 {
-    public static void ApplyHit(GameObject target, Controller attacker, int damage, KnockBackData knockBack)
+    public static void ApplyHit<T>(GameObject target, Controller attacker, int damage, KnockBackData knockBack) where T : Health
     {
-        Health health = target.GetComponentInParent<Health>();
+        T health = target.GetComponentInParent<T>();
         if (!health) return;
 
         Controller targetController = target.GetComponentInParent<Controller>();
         if (attacker.HasTypeDamageBonus && targetController != null && targetController.Type == attacker.Type) damage *= 2;
+        
+        Debug.Log($"Attack type : {attacker.Type} / Target type : {targetController.Type}");
 
         health.ChangeHealth(-damage);
 

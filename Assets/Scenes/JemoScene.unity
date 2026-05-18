@@ -2203,10 +2203,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1086497939}
     m_Modifications:
-    - target: {fileID: 2846772371690331436, guid: 2368793af343e7249a9582a1ee4ee512, type: 3}
-      propertyPath: m_Radius
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 3011529788130516782, guid: 2368793af343e7249a9582a1ee4ee512, type: 3}
       propertyPath: m_LocalPosition.x
       value: 11
@@ -2246,14 +2242,6 @@ PrefabInstance:
     - target: {fileID: 3011529788130516782, guid: 2368793af343e7249a9582a1ee4ee512, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4294088483137381760, guid: 2368793af343e7249a9582a1ee4ee512, type: 3}
-      propertyPath: MaxHealth
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6549702727860710937, guid: 2368793af343e7249a9582a1ee4ee512, type: 3}
-      propertyPath: playerMask.m_Bits
-      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8739953015054851595, guid: 2368793af343e7249a9582a1ee4ee512, type: 3}
       propertyPath: m_Name

@@ -343,6 +343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   type: 1
+  typeDamageBonus: 0
   attackDamage: 1
   attackCooldown: 0.5
   contactDamage: 1
@@ -352,7 +353,7 @@ MonoBehaviour:
   detectionRadius: 10
   playerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
 --- !u!114 &4294088483137381760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -365,7 +366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ae508def6762224fa954e5fcfbaab68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  MaxHealth: 10
+  MaxHealth: 5
 --- !u!114 &5126417146375101268
 MonoBehaviour:
   m_ObjectHideFlags: 0

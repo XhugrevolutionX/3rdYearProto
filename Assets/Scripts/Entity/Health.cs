@@ -42,9 +42,9 @@ public class Health : MonoBehaviour
     /// <summary>
     /// Handles the entity taking damage. Override for specific behavior.
     /// </summary>
-    protected virtual void TakeDamage()
+    protected virtual void TakeDamage(int amount)
     {
-        Debug.Log("Entity took damage");
+        Debug.Log($"Entity took {Mathf.Abs(amount)} damage");
     }
     
     /// <summary>
@@ -54,7 +54,7 @@ public class Health : MonoBehaviour
     public virtual void ChangeHealth(int amount)
     {
         CurrentHealth += amount;
-        if (amount < 0) TakeDamage();
+        if (amount < 0) TakeDamage(amount);
     }
 
     /// <summary>
