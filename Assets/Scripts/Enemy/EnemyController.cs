@@ -52,18 +52,7 @@ public class EnemyController : Controller
 
     private void OnCollisionEnter(Collision collision)
     {
-        PlayerHealth playerHealth = collision.gameObject.GetComponentInParent<PlayerHealth>();
-        if (!playerHealth) return;
-
-        playerHealth.ChangeHealth(-contactDamage);
-
-        Movement movement = collision.gameObject.GetComponentInParent<Movement>();
-        if (movement)
-        {
-            Vector3 direction = (collision.transform.position - transform.position).normalized;
-            direction.y = knockBackUpForce;
-            movement.KnockBack(direction, knockBackForce, knockBackDuration);
-        }
+        CombatUtils.ApplyHit(collision.gameObject, transform, contactDamage, knockBackForce, knockBackUpForce, knockBackDuration);
     }
 
     protected override void Attack()

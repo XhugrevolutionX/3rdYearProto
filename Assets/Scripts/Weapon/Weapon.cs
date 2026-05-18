@@ -17,17 +17,6 @@ public class Weapon : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Health health = other.GetComponentInParent<Health>();
-        if (!health) return;
-
-        health.ChangeHealth(-controller.AttackDamage);
-
-        Movement movement = other.GetComponentInParent<Movement>();
-        if (movement)
-        {
-            Vector3 direction = (other.transform.position - controller.transform.position).normalized;
-            direction.y = knockBackUpForce;
-            movement.KnockBack(direction, knockBackForce, knockBackDuration);
-        }
+        CombatUtils.ApplyHit(other.gameObject, controller.transform, controller.AttackDamage, knockBackForce, knockBackUpForce, knockBackDuration);
     }
 }
