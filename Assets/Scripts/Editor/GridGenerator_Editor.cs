@@ -117,5 +117,34 @@ public class GridGenerator_Editor : Editor
                 $"Effective seed count: {effective}  ({biomeTypes.arraySize} biome type(s) defined)",
                 MessageType.None);
         }
+
+        EditorGUILayout.Space(6);
+        EditorGUILayout.LabelField("Neutral Zone (Boss Arena)", EditorStyles.boldLabel);
+
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("neutralBiome"),
+            new GUIContent("Neutral Biome", "Meshes used for the 7-hex boss arena."),
+            includeChildren: true);
+
+        var randomizeProp = serializedObject.FindProperty("randomizeNeutralPosition");
+        EditorGUILayout.PropertyField(randomizeProp,
+            new GUIContent("Random Position", "Pick a new random position each generation."));
+
+        if (!randomizeProp.boolValue)
+        {
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.PrefixLabel(new GUIContent("Center (Q, R)",
+                "Axial coordinates of the zone center. Must be within hexRadius - 1 from origin."));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("neutralCenterQ"), GUIContent.none);
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("neutralCenterR"), GUIContent.none);
+            EditorGUILayout.EndHorizontal();
+        }
+
+        // Show the actual center after generation.
+        if (grid.BiomeGroups.Count > 0)
+        {
+            var c = grid.NeutralZoneCenter;
+            EditorGUILayout.HelpBox($"Neutral zone center last placed at Q={c.Q}, R={c.R}",
+                MessageType.None);
+        }
     }
 }

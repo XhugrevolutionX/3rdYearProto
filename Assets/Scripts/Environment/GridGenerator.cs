@@ -44,6 +44,16 @@ public class GridGenerator : MonoBehaviour
     [Tooltip("Minimum hex-distance enforced between two seed points. 0 = auto.")]
     [SerializeField] private int biomeSeedSeparation = 0;
 
+    [Header("Neutral Zone (Boss Arena)")]
+    [Tooltip("Biome used for the 7-hex neutral zone (center + 6 neighbours).")]
+    [SerializeField] private HexBiomeType neutralBiome;
+    [Tooltip("Pick a random valid position each generation instead of using the coordinates below.")]
+    [SerializeField] private bool randomizeNeutralPosition = false;
+    [Tooltip("Axial Q coordinate of the neutral zone center (ignored when Randomize is on).")]
+    [SerializeField] private int neutralCenterQ = 0;
+    [Tooltip("Axial R coordinate of the neutral zone center (ignored when Randomize is on).")]
+    [SerializeField] private int neutralCenterR = 0;
+
     // ── Square ───────────────────────────────────────────────────────────────
     [SerializeField] private GameObject squarePrefab;
     [SerializeField] private int squareColumns = 10;
@@ -61,8 +71,15 @@ public class GridGenerator : MonoBehaviour
     private readonly Dictionary<Hex, GameObject> _hexCells     = new();
     private readonly Dictionary<Hex, int>        _hexTileTypes = new(); // biome type index per cell
     private readonly Dictionary<Hex, bool>       _hexBlocking  = new(); // true = blocks movement
+    private readonly HashSet<Hex>                _neutralZone  = new();
     private readonly Dictionary<Vector2Int, GameObject> _squareCells  = new();
     private readonly Dictionary<Vector2Int, GameObject> _octagonCells = new();
+
+    /// <summary>Index used in _hexTileTypes for neutral-zone tiles (one past the regular biome array).</summary>
+    public int NeutralBiomeIndex => hexBiomeTypes.Length;
+
+    /// <summary>Center hex of the neutral zone, set after each generation.</summary>
+    public Hex NeutralZoneCenter { get; private set; }
 
     /// <summary>
     /// Contiguous same-biome clusters found after generation, sorted largest-first.
@@ -101,14 +118,21 @@ public class GridGenerator : MonoBehaviour
                 allHexes.Add(new Hex(q, r));
         }
 
-        // 2. Place biome seeds spread across the grid.
-        var seeds = PlaceBiomeSeeds(allHexes);
+        // 2. Carve out the neutral zone so Voronoi seeds never land inside it.
+        BuildNeutralZone(allHexes);
+        var voronoiHexes = allHexes.FindAll(h => !_neutralZone.Contains(h));
 
-        // 3. Voronoi: each hex takes the biome type of its nearest seed.
+        // 3. Place biome seeds spread across the non-neutral grid.
+        var seeds = PlaceBiomeSeeds(voronoiHexes);
+
+        // 4. Assign types: neutral zone gets the sentinel index, rest use Voronoi.
         foreach (var hex in allHexes)
         {
-            int biomeIndex = NearestSeedType(hex, seeds);
-            var pos        = HexLayout.HexToWorld(hex, size);
+            int biomeIndex = _neutralZone.Contains(hex)
+                ? NeutralBiomeIndex
+                : NearestSeedType(hex, seeds);
+
+            var pos = HexLayout.HexToWorld(hex, size);
             SpawnHex(pos, hexPrefab.transform.rotation, $"Hex({hex.Q},{hex.R})", biomeIndex,
                      out var cell, out bool blocking);
             _hexCells[hex]     = cell;
@@ -121,6 +145,48 @@ public class GridGenerator : MonoBehaviour
         // TODO: once fused-tile meshes exist, iterate BiomeGroups here and
         // swap tiles above a minimum cluster size for their fused mesh variant.
     }
+
+    // Picks the neutral zone center (random or fixed), then fills _neutralZone
+    // with the center hex and its 6 neighbours.  Only hexes that exist in the
+    // grid are added, so an off-center placement near the edge is safe.
+    private void BuildNeutralZone(List<Hex> allHexes)
+    {
+        _neutralZone.Clear();
+        if (neutralBiome == null) return;
+
+        var gridSet = new HashSet<Hex>(allHexes);
+        var origin  = new Hex(0, 0);
+
+        Hex center;
+        if (randomizeNeutralPosition)
+        {
+            // Valid centers: all 7 tiles must fit, so distance ≤ hexRadius - 1.
+            var validCenters = allHexes.FindAll(h => h.DistanceTo(origin) <= hexRadius - 1);
+            center = validCenters.Count > 0
+                ? validCenters[Random.Range(0, validCenters.Count)]
+                : origin;
+        }
+        else
+        {
+            center = new Hex(neutralCenterQ, neutralCenterR);
+            // Clamp to a valid position if the configured coords are out of range.
+            if (center.DistanceTo(origin) > hexRadius - 1)
+            {
+                Debug.LogWarning($"GridGenerator: neutral zone center ({neutralCenterQ},{neutralCenterR}) " +
+                                 "is too close to the edge — falling back to grid origin.");
+                center = origin;
+            }
+        }
+
+        NeutralZoneCenter = center;
+        if (gridSet.Contains(center)) _neutralZone.Add(center);
+        foreach (var n in center.Neighbours())
+            if (gridSet.Contains(n)) _neutralZone.Add(n);
+    }
+
+    // Resolves a biome by index, returning the neutral biome for the sentinel value.
+    private HexBiomeType ResolveBiome(int biomeIndex) =>
+        biomeIndex < hexBiomeTypes.Length ? hexBiomeTypes[biomeIndex] : neutralBiome;
 
     // Seeds cycle through biome types so every type appears roughly equally.
     // A minimum separation is enforced so seeds cannot cluster together.
@@ -194,7 +260,7 @@ public class GridGenerator : MonoBehaviour
         cell = Instantiate(hexPrefab, pos, rot, transform);
         cell.name = cellName;
 
-        var biome = hexBiomeTypes[biomeIndex];
+        var biome = ResolveBiome(biomeIndex);
 
         // Roll against the biome's blocking chance, but only if blocking meshes exist.
         // If a pool is empty we silently fall back to the other one.
@@ -232,11 +298,16 @@ public class GridGenerator : MonoBehaviour
         foreach (var biome in hexBiomeTypes)
         {
             if (biome.passableMeshes != null)
-                foreach (var m in biome.passableMeshes)
-                    if (m != null) return m;
+                foreach (var m in biome.passableMeshes) if (m != null) return m;
             if (biome.blockingMeshes != null)
-                foreach (var m in biome.blockingMeshes)
-                    if (m != null) return m;
+                foreach (var m in biome.blockingMeshes) if (m != null) return m;
+        }
+        if (neutralBiome != null)
+        {
+            if (neutralBiome.passableMeshes != null)
+                foreach (var m in neutralBiome.passableMeshes) if (m != null) return m;
+            if (neutralBiome.blockingMeshes != null)
+                foreach (var m in neutralBiome.blockingMeshes) if (m != null) return m;
         }
         return null;
     }
@@ -287,6 +358,9 @@ public class GridGenerator : MonoBehaviour
     /// <summary>Returns the biome type index (hexBiomeTypes slot) of the given hex, or -1 if absent.</summary>
     public int GetHexTileType(Hex hex) =>
         _hexTileTypes.TryGetValue(hex, out int t) ? t : -1;
+
+    /// <summary>Returns true if the tile at <paramref name="hex"/> belongs to the neutral boss-arena zone.</summary>
+    public bool IsNeutralZone(Hex hex) => _neutralZone.Contains(hex);
 
     /// <summary>Returns true if the tile at <paramref name="hex"/> was spawned as a blocking tile.</summary>
     public bool IsBlocking(Hex hex) =>
@@ -362,6 +436,7 @@ public class GridGenerator : MonoBehaviour
         _hexCells.Clear();
         _hexTileTypes.Clear();
         _hexBlocking.Clear();
+        _neutralZone.Clear();
         _squareCells.Clear();
         _octagonCells.Clear();
         BiomeGroups.Clear();
