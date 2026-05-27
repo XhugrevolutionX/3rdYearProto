@@ -14390,36 +14390,36 @@ MonoBehaviour:
   gridType: 0
   hexPrefab: {fileID: 291677264823543040, guid: 86d19c199439a154b96e399a23feb80f, type: 3}
   hexBiomeTypes:
-  - name: Blue
+  - name: BLUE
     passableMeshes:
     - {fileID: -5016266120106696483, guid: 0d965607b7707ed4fb56d86c1c50fbaa, type: 3}
     blockingMeshes:
     - {fileID: 994106964543891027, guid: 101dca8f02b3a1e4ab8c633072414869, type: 3}
     blockingChance: 0.2
-  - name: Green
+  - name: GREEN
     passableMeshes:
     - {fileID: 7129732711217635375, guid: e018b85373e6cac4eaa52098e06c2f42, type: 3}
     blockingMeshes:
     - {fileID: 3733908942366842210, guid: cf006b9c7e43bb34182dd308f3c3d9a6, type: 3}
     blockingChance: 0.2
-  - name: Orange
+  - name: ORANGE
     passableMeshes:
     - {fileID: -8138898366698875231, guid: afb38cfb7aa9dcc4183f4c408324fdd4, type: 3}
     blockingMeshes:
     - {fileID: -4753898612716982801, guid: c3a251b6c94b93b4d93a33d881a1f2b5, type: 3}
     blockingChance: 0.2
-  - name: Purple
+  - name: PURPLE
     passableMeshes:
     - {fileID: -5152332005373478894, guid: 38198c0f7acbc9b46b2ca23cceaf51eb, type: 3}
     blockingMeshes:
     - {fileID: -3874675069072869062, guid: da203fad8d2ab5045808a3cd4cbc8c8a, type: 3}
     blockingChance: 0.2
-  - name: Red
+  - name: RED
     passableMeshes:
     - {fileID: 5825918509573377075, guid: 655ab7694fd631e4cbd7bdd53a7b3ee5, type: 3}
     blockingMeshes: []
     blockingChance: 0
-  - name: Yellow
+  - name: YELLOW
     passableMeshes:
     - {fileID: 5229121072068531599, guid: 3ebbb86020f77ae4a85c960971d4ea10, type: 3}
     blockingMeshes:
@@ -14429,7 +14429,7 @@ MonoBehaviour:
   biomeCount: 6
   biomeSeedSeparation: 0
   neutralBiome:
-    name: BossZone
+    name: WHITE
     passableMeshes:
     - {fileID: 2949856342419854161, guid: 51482f24b6e9c5b4894c5a3d452b69f1, type: 3}
     blockingMeshes: []

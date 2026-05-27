@@ -13,6 +13,9 @@ public class HexBiomeType
 {
     public string name = "Biome";
 
+    [Tooltip("Color identity for this biome, assigned to the Area component on every tile.")]
+    public TypeColor color = TypeColor.WHITE;
+
     [Tooltip("Meshes used for tiles the player can walk through.")]
     public Mesh[] passableMeshes = {};
 
@@ -261,6 +264,10 @@ public class GridGenerator : MonoBehaviour
         cell.name = cellName;
 
         var biome = ResolveBiome(biomeIndex);
+
+        // Assign the biome color to the Area component so game logic can read it.
+        var area = cell.GetComponentInChildren<Area>();
+        if (area != null) area.Type = biome.color;
 
         // Roll against the biome's blocking chance, but only if blocking meshes exist.
         // If a pool is empty we silently fall back to the other one.
