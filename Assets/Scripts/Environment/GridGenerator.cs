@@ -91,7 +91,7 @@ public class GridGenerator : MonoBehaviour
     /// </summary>
     public List<List<Hex>> BiomeGroups { get; private set; } = new();
 
-    void Start() => GenerateGrid();
+    //void Start() => GenerateGrid();
 
     public void GenerateGrid()
     {
