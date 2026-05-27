@@ -26,7 +26,23 @@ public class PlayerMovement : Movement
         _rb.linearVelocity = new Vector3(_rb.linearVelocity.x, 0, _rb.linearVelocity.z);
         _rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
-    
+
+    protected override void RotateView()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        Plane groundPlane = new Plane(Vector3.up, transform.position);
+
+        if (groundPlane.Raycast(ray, out float distance))
+        {
+            Vector3 worldPoint = ray.GetPoint(distance);
+            Vector3 direction = worldPoint - transform.position;
+            direction.y = 0f;
+
+            if (direction.sqrMagnitude > 0.01f)
+                transform.rotation = Quaternion.LookRotation(direction);
+        }
+    }
+
     private bool CheckCollisions()
     {
         return Physics.SphereCast(

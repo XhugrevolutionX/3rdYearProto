@@ -51,7 +51,7 @@ public class Movement : MonoBehaviour
 
     private void Move() => _rb.linearVelocity = new Vector3(_direction.x * speed, _rb.linearVelocity.y, _direction.y * speed);
 
-    private void RotateView()
+    protected virtual void RotateView()
     {
         if (_direction.sqrMagnitude < 0.01f) return;
 
