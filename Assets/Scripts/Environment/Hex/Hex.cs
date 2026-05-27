@@ -20,6 +20,14 @@
       public Hex Neighbor(int direction) =>
           new(Q + Directions[direction].Q, R + Directions[direction].R);
 
+      /// <summary>Returns all 6 neighbours of this hex.</summary>
+      public Hex[] Neighbours()
+      {
+          var result = new Hex[6];
+          for (int i = 0; i < 6; i++) result[i] = Neighbor(i);
+          return result;
+      }
+
       public int DistanceTo(Hex other) =>
           (Mathf.Abs(Q - other.Q) + Mathf.Abs(R - other.R) + Mathf.Abs(S - other.S)) / 2;
 
