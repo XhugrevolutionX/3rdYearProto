@@ -188,7 +188,7 @@ MonoBehaviour:
   raycastDistance: 1.5
   areaMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
 --- !u!114 &3867011284375230144
 MonoBehaviour:
   m_ObjectHideFlags: 0

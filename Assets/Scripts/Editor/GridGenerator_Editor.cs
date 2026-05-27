@@ -92,6 +92,9 @@ public class GridGenerator_Editor : Editor
 
         EditorGUILayout.Space(4);
         EditorGUILayout.PropertyField(serializedObject.FindProperty("hexRadius"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("tileScale"),
+            new GUIContent("Tile Scale", "Uniform scale applied to every spawned tile. " +
+                           "Spacing is recomputed automatically to match."));
 
         EditorGUILayout.Space(4);
 

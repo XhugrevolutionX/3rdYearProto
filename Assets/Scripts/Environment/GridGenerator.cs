@@ -36,9 +36,10 @@ public class GridGenerator : MonoBehaviour
     // One shared prefab is instantiated for every cell.
     // Biomes are seeded with Voronoi; each biome owns its own mesh variants.
 
-    [SerializeField] private GameObject    hexPrefab;
+    [SerializeField] private GameObject     hexPrefab;
     [SerializeField] private HexBiomeType[] hexBiomeTypes = {};
     [SerializeField] private int            hexRadius = 5;
+    [SerializeField] private float          tileScale = 1.5f;
 
     [Header("Biome Generation")]
     [Tooltip("Number of Voronoi regions. 0 = one region per biome type. " +
@@ -262,6 +263,7 @@ public class GridGenerator : MonoBehaviour
     {
         cell = Instantiate(hexPrefab, pos, rot, transform);
         cell.name = cellName;
+        cell.transform.localScale = hexPrefab.transform.localScale * tileScale;
 
         var biome = ResolveBiome(biomeIndex);
 
@@ -295,8 +297,10 @@ public class GridGenerator : MonoBehaviour
     {
         var mf   = hexPrefab.GetComponentInChildren<MeshFilter>();
         var mesh = (mf != null && mf.sharedMesh != null) ? mf.sharedMesh : FirstAvailableMesh();
-        if (mesh == null) return 1f;
-        var s = hexPrefab.transform.localScale;
+        if (mesh == null) return tileScale;
+        // Multiply by both the prefab's base scale and tileScale so spacing
+        // always matches the actual rendered size of the tiles.
+        var s = hexPrefab.transform.localScale * tileScale;
         return Mathf.Max(mesh.bounds.extents.x * s.x, mesh.bounds.extents.z * s.z);
     }
 
