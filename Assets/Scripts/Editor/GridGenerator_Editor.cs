@@ -121,9 +121,15 @@ public class GridGenerator_Editor : Editor
                 MessageType.None);
         }
 
-        EditorGUILayout.Space(6);
-        EditorGUILayout.LabelField("Neutral Zone (Boss Arena)", EditorStyles.boldLabel);
+        // Mini Boss Spawn Points — [Header] on spawnBiomeSpawnPoints renders the section title.
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("spawnBiomeSpawnPoints"),
+            new GUIContent("Spawn Points", "Create one spawn-point per biome type at the centroid of its largest cluster."));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("spawnPointPrefab"),
+            new GUIContent("Spawn Point Prefab", "Optional. Leave empty for a plain empty GameObject."));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("spawnPointYOffset"),
+            new GUIContent("Y Offset", "Height above the ground at which spawn points are placed."));
 
+        // Neutral Zone — LabelField removed; [Header] on neutralBiome renders the title via PropertyField.
         EditorGUILayout.PropertyField(serializedObject.FindProperty("neutralBiome"),
             new GUIContent("Neutral Biome", "Meshes used for the 7-hex boss arena."),
             includeChildren: true);

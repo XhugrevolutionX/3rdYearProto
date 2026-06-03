@@ -88,7 +88,7 @@ MonoBehaviour:
     blockingMeshes:
     - {fileID: -8855151091930328513, guid: 1aef12ab2d4c0934b98c47ec7dc1a91b, type: 3}
     blockingChance: 0.2
-  hexRadius: 10
+  hexRadius: 20
   tileScale: 1.5
   biomeCount: 6
   biomeSeedSeparation: 0
@@ -96,7 +96,7 @@ MonoBehaviour:
     name: WHITE
     color: 0
     passableMeshes:
-    - {fileID: 2949856342419854161, guid: 51482f24b6e9c5b4894c5a3d452b69f1, type: 3}
+    - {fileID: -4753898612716982801, guid: 7617a0dc6b6e8e1428600d72d0886d1a, type: 3}
     blockingMeshes: []
     blockingChance: 0
   randomizeNeutralPosition: 1

@@ -48,6 +48,14 @@ public class GridGenerator : MonoBehaviour
     [Tooltip("Minimum hex-distance enforced between two seed points. 0 = auto.")]
     [SerializeField] private int biomeSeedSeparation = 0;
 
+    [Header("Mini Boss Spawn Points")]
+    [Tooltip("Create one spawn-point Transform per biome type, placed at the centroid of that type's largest cluster.")]
+    [SerializeField] private bool spawnBiomeSpawnPoints = true;
+    [Tooltip("Optional prefab instantiated at each spawn point. Leave empty for a plain empty GameObject.")]
+    [SerializeField] private GameObject spawnPointPrefab;
+    [Tooltip("Height above the ground at which spawn points are placed.")]
+    [SerializeField] private float spawnPointYOffset = 0.5f;
+
     [Header("Neutral Zone (Boss Arena)")]
     [Tooltip("Biome used for the 7-hex neutral zone (center + 6 neighbours).")]
     [SerializeField] private HexBiomeType neutralBiome;
@@ -79,6 +87,8 @@ public class GridGenerator : MonoBehaviour
     private readonly Dictionary<Vector2Int, GameObject> _squareCells  = new();
     private readonly Dictionary<Vector2Int, GameObject> _octagonCells = new();
 
+    private float _hexCellSize;
+
     /// <summary>Index used in _hexTileTypes for neutral-zone tiles (one past the regular biome array).</summary>
     public int NeutralBiomeIndex => hexBiomeTypes.Length;
 
@@ -90,6 +100,16 @@ public class GridGenerator : MonoBehaviour
     /// Each inner list contains the Hex coords belonging to that cluster.
     /// </summary>
     public List<List<Hex>> BiomeGroups { get; private set; } = new();
+
+    /// <summary>
+    /// One spawn-point Transform per regular biome type, placed at the centroid of that
+    /// type's largest contiguous cluster. Populated after each <see cref="GenerateGrid"/> call.
+    /// Indexed in the same order as <see cref="hexBiomeTypes"/>.
+    /// </summary>
+    public List<Transform> BiomeSpawnPoints { get; private set; } = new();
+
+    /// <summary>Spawn-point Transform at the center of the neutral boss arena. Null when no neutral biome is set.</summary>
+    public Transform NeutralZoneSpawnPoint { get; private set; }
 
     //void Start() => GenerateGrid();
 
@@ -111,6 +131,7 @@ public class GridGenerator : MonoBehaviour
         if (hexPrefab == null || hexBiomeTypes == null || hexBiomeTypes.Length == 0) return;
 
         float size = HexCellSize();
+        _hexCellSize = size;
 
         // 1. Collect every hex coordinate.
         var allHexes = new List<Hex>();
@@ -145,6 +166,11 @@ public class GridGenerator : MonoBehaviour
         }
 
         BiomeGroups = DetectBiomes();
+
+        if (spawnBiomeSpawnPoints)
+            PlaceBiomeSpawnPoints();
+
+        PlaceNeutralZoneSpawnPoint();
 
         // TODO: once fused-tile meshes exist, iterate BiomeGroups here and
         // swap tiles above a minimum cluster size for their fused mesh variant.
@@ -286,9 +312,9 @@ public class GridGenerator : MonoBehaviour
         var mf = cell.GetComponentInChildren<MeshFilter>();
         if (mf != null) mf.sharedMesh = mesh;
 
-        // MeshCollider.sharedMesh is independent — set it explicitly.
-        var mc = cell.GetComponentInChildren<MeshCollider>();
-        if (mc != null) mc.sharedMesh = mesh;
+        // // MeshCollider.sharedMesh is independent — set it explicitly.
+        // var mc = cell.GetComponentInChildren<MeshCollider>();
+        // if (mc != null) mc.sharedMesh = mesh;
     }
 
     // Returns the cell size using the prefab's existing mesh, or the first
@@ -362,6 +388,84 @@ public class GridGenerator : MonoBehaviour
 
         groups.Sort((a, b) => b.Count.CompareTo(a.Count));
         return groups;
+    }
+
+    // For each regular biome type, finds its largest contiguous cluster in BiomeGroups
+    // (BiomeGroups is already sorted largest-first) and places one spawn point at the
+    // centroid of that cluster. The neutral zone is skipped.
+    private void PlaceBiomeSpawnPoints()
+    {
+        BiomeSpawnPoints.Clear();
+
+        var spawnRoot = new GameObject("BiomeSpawnPoints");
+        spawnRoot.transform.SetParent(transform);
+        spawnRoot.transform.localPosition = Vector3.zero;
+
+        for (int typeIndex = 0; typeIndex < hexBiomeTypes.Length; typeIndex++)
+        {
+            // BiomeGroups is sorted largest-first, so the first match is the biggest cluster.
+            List<Hex> largestCluster = null;
+            foreach (var group in BiomeGroups)
+            {
+                if (_hexTileTypes.TryGetValue(group[0], out int t) && t == typeIndex)
+                {
+                    largestCluster = group;
+                    break;
+                }
+            }
+
+            if (largestCluster == null) continue;
+
+            var centroid = Vector3.zero;
+            foreach (var hex in largestCluster)
+                centroid += HexLayout.HexToWorld(hex, _hexCellSize);
+            centroid /= largestCluster.Count;
+
+            // Pick the non-blocking hex whose world position is nearest to the centroid.
+            // Falls back to the raw centroid if every tile in the cluster is blocking.
+            var spawnPos = centroid;
+            float bestDist = float.MaxValue;
+            bool found = false;
+            foreach (var hex in largestCluster)
+            {
+                if (_hexBlocking.TryGetValue(hex, out bool blocking) && blocking) continue;
+                var worldPos = HexLayout.HexToWorld(hex, _hexCellSize);
+                float dist = (worldPos - centroid).sqrMagnitude;
+                if (dist < bestDist) { bestDist = dist; spawnPos = worldPos; found = true; }
+            }
+            if (!found)
+                Debug.LogWarning($"GridGenerator: all tiles in biome '{hexBiomeTypes[typeIndex].name}' are blocking — spawn point placed at centroid.");
+
+            spawnPos.y += spawnPointYOffset;
+
+            GameObject spawnGo;
+            if (spawnPointPrefab != null)
+            {
+                spawnGo = Instantiate(spawnPointPrefab, spawnPos, Quaternion.identity, spawnRoot.transform);
+            }
+            else
+            {
+                spawnGo = new GameObject();
+                spawnGo.transform.SetParent(spawnRoot.transform);
+                spawnGo.transform.position = spawnPos;
+            }
+            spawnGo.name = $"SpawnPoint_{hexBiomeTypes[typeIndex].name}";
+            BiomeSpawnPoints.Add(spawnGo.transform);
+        }
+    }
+
+    private void PlaceNeutralZoneSpawnPoint()
+    {
+        NeutralZoneSpawnPoint = null;
+        if (neutralBiome == null) return;
+
+        var pos = HexLayout.HexToWorld(NeutralZoneCenter, _hexCellSize);
+        pos.y += spawnPointYOffset;
+
+        var go = new GameObject("SpawnPoint_NeutralZone");
+        go.transform.SetParent(transform);
+        go.transform.position = pos;
+        NeutralZoneSpawnPoint = go.transform;
     }
 
     // ── Accessors ─────────────────────────────────────────────────────────────
@@ -451,6 +555,8 @@ public class GridGenerator : MonoBehaviour
         _squareCells.Clear();
         _octagonCells.Clear();
         BiomeGroups.Clear();
+        BiomeSpawnPoints.Clear();
+        NeutralZoneSpawnPoint = null;
     }
 
     private void Spawn(GameObject prefab, Vector3 pos, Quaternion rot, string cellName, out GameObject cell)
