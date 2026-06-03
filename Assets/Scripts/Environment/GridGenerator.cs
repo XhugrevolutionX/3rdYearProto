@@ -111,7 +111,12 @@ public class GridGenerator : MonoBehaviour
     public List<Transform> BiomeSpawnPoints { get; private set; } = new();
 
     /// <summary>Spawn-point Transform at the center of the neutral boss arena. Null when no neutral biome is set.</summary>
-    public Transform NeutralZoneSpawnPoint { get; private set; }
+    [SerializeField] private Transform _neutralZoneSpawnPoint;
+    public Transform NeutralZoneSpawnPoint
+    {
+        get => _neutralZoneSpawnPoint;
+        private set => _neutralZoneSpawnPoint = value;
+    }
 
     /// <summary>World positions of every passable, non-neutral-zone hex. Populated after each <see cref="GenerateGrid"/> call.</summary>
     public List<Vector3> PassableHexPositions { get; private set; } = new();
