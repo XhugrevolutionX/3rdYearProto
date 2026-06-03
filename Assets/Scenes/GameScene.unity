@@ -44432,7 +44432,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20cdaef3a1f6dfb4aa93b6882cd7002a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  timer: 300
+  boss: {fileID: 311595475848069740, guid: 9c48fbb85a24d3b4590026ca5547d8dd, type: 3}
+  timer: 5
   gridGenerator: {fileID: 2035648456}
 --- !u!1 &472536556
 GameObject:
