@@ -148,6 +148,9 @@ public class GridGenerator_Editor : Editor
             EditorGUILayout.EndHorizontal();
         }
 
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("bossSpawnPointPrefab"),
+            new GUIContent("Boss Spawn Point Prefab", "Optional. Leave empty for a plain empty GameObject."));
+
         // Show the actual center after generation.
         if (grid.BiomeGroups.Count > 0)
         {

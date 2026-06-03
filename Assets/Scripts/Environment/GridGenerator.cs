@@ -59,6 +59,8 @@ public class GridGenerator : MonoBehaviour
     [Header("Neutral Zone (Boss Arena)")]
     [Tooltip("Biome used for the 7-hex neutral zone (center + 6 neighbours).")]
     [SerializeField] private HexBiomeType neutralBiome;
+    [Tooltip("Optional prefab instantiated at the boss spawn point. Leave empty for a plain empty GameObject.")]
+    [SerializeField] private GameObject bossSpawnPointPrefab;
     [Tooltip("Pick a random valid position each generation instead of using the coordinates below.")]
     [SerializeField] private bool randomizeNeutralPosition = false;
     [Tooltip("Axial Q coordinate of the neutral zone center (ignored when Randomize is on).")]
@@ -110,6 +112,15 @@ public class GridGenerator : MonoBehaviour
 
     /// <summary>Spawn-point Transform at the center of the neutral boss arena. Null when no neutral biome is set.</summary>
     public Transform NeutralZoneSpawnPoint { get; private set; }
+
+    /// <summary>World positions of every passable, non-neutral-zone hex. Populated after each <see cref="GenerateGrid"/> call.</summary>
+    public List<Vector3> PassableHexPositions { get; private set; } = new();
+
+    /// <summary>Passable hex positions grouped by biome color. Use this to spawn the right enemies per biome.</summary>
+    public Dictionary<TypeColor, List<Vector3>> PassableHexPositionsByBiome { get; private set; } = new();
+
+    /// <summary>Mini boss spawn points keyed by biome color for direct lookup.</summary>
+    public Dictionary<TypeColor, Transform> MiniBossSpawnPointsByBiome { get; private set; } = new();
 
     //void Start() => GenerateGrid();
 
@@ -163,6 +174,25 @@ public class GridGenerator : MonoBehaviour
             _hexCells[hex]     = cell;
             _hexTileTypes[hex] = biomeIndex;
             _hexBlocking[hex]  = blocking;
+        }
+
+        PassableHexPositions = new List<Vector3>();
+        PassableHexPositionsByBiome = new Dictionary<TypeColor, List<Vector3>>();
+        foreach (var (hex, cell) in _hexCells)
+        {
+            if (_neutralZone.Contains(hex)) continue;
+            if (_hexBlocking.TryGetValue(hex, out bool blocking) && blocking) continue;
+
+            var pos = cell.transform.position;
+            PassableHexPositions.Add(pos);
+
+            if (_hexTileTypes.TryGetValue(hex, out int biomeIndex) && biomeIndex < hexBiomeTypes.Length)
+            {
+                var color = hexBiomeTypes[biomeIndex].color;
+                if (!PassableHexPositionsByBiome.ContainsKey(color))
+                    PassableHexPositionsByBiome[color] = new List<Vector3>();
+                PassableHexPositionsByBiome[color].Add(pos);
+            }
         }
 
         BiomeGroups = DetectBiomes();
@@ -396,6 +426,7 @@ public class GridGenerator : MonoBehaviour
     private void PlaceBiomeSpawnPoints()
     {
         BiomeSpawnPoints.Clear();
+        MiniBossSpawnPointsByBiome.Clear();
 
         var spawnRoot = new GameObject("BiomeSpawnPoints");
         spawnRoot.transform.SetParent(transform);
@@ -451,6 +482,7 @@ public class GridGenerator : MonoBehaviour
             }
             spawnGo.name = $"SpawnPoint_{hexBiomeTypes[typeIndex].name}";
             BiomeSpawnPoints.Add(spawnGo.transform);
+            MiniBossSpawnPointsByBiome[hexBiomeTypes[typeIndex].color] = spawnGo.transform;
         }
     }
 
@@ -462,9 +494,18 @@ public class GridGenerator : MonoBehaviour
         var pos = HexLayout.HexToWorld(NeutralZoneCenter, _hexCellSize);
         pos.y += spawnPointYOffset;
 
-        var go = new GameObject("SpawnPoint_NeutralZone");
-        go.transform.SetParent(transform);
-        go.transform.position = pos;
+        GameObject go;
+        if (bossSpawnPointPrefab != null)
+        {
+            go = Instantiate(bossSpawnPointPrefab, pos, Quaternion.identity, transform);
+        }
+        else
+        {
+            go = new GameObject();
+            go.transform.SetParent(transform);
+            go.transform.position = pos;
+        }
+        go.name = "SpawnPoint_NeutralZone";
         NeutralZoneSpawnPoint = go.transform;
     }
 
@@ -557,6 +598,9 @@ public class GridGenerator : MonoBehaviour
         BiomeGroups.Clear();
         BiomeSpawnPoints.Clear();
         NeutralZoneSpawnPoint = null;
+        PassableHexPositions.Clear();
+        PassableHexPositionsByBiome.Clear();
+        MiniBossSpawnPointsByBiome.Clear();
     }
 
     private void Spawn(GameObject prefab, Vector3 pos, Quaternion rot, string cellName, out GameObject cell)

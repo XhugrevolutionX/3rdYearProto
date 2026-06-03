@@ -14,10 +14,19 @@ public class GameManager : MonoBehaviour
     public float Timer => timer;
 
     /// <summary>One spawn point per biome type, at the largest passable cluster's centroid. Populated after grid generation.</summary>
-    public List<Transform> MiniBossSpawnPoints => gridGenerator != null ? gridGenerator.BiomeSpawnPoints : new List<Transform>();
+    public List<Transform> MiniBossSpawnPoints => gridGenerator.BiomeSpawnPoints;
 
     /// <summary>Spawn point at the center of the neutral boss arena. Null until grid generation completes.</summary>
-    public Transform BossSpawnPoint => gridGenerator != null ? gridGenerator.NeutralZoneSpawnPoint : null;
+    public Transform BossSpawnPoint => gridGenerator.NeutralZoneSpawnPoint;
+
+    /// <summary>World positions of every passable, non-neutral-zone hex. Use these to spawn normal enemies.</summary>
+    public List<Vector3> EnemySpawnPositions => gridGenerator.PassableHexPositions;
+
+    /// <summary>Passable hex positions grouped by biome color. Spawn the right enemy type per color.</summary>
+    public Dictionary<TypeColor, List<Vector3>> EnemySpawnPositionsByBiome => gridGenerator.PassableHexPositionsByBiome;
+
+    /// <summary>Mini boss spawn points keyed by biome color.</summary>
+    public Dictionary<TypeColor, Transform> MiniBossSpawnPointsByBiome => gridGenerator.MiniBossSpawnPointsByBiome;
     
     private bool _gameFinished;
 
