@@ -18,7 +18,7 @@ public static class CombatUtils
         Controller targetController = target.GetComponentInParent<Controller>();
         if (attacker.HasTypeDamageBonus && targetController != null && targetController.Type == attacker.Type) damage *= 2;
         
-        Debug.Log($"Attack type : {attacker.Type} / Target type : {targetController.Type}");
+        // Debug.Log($"Attack type : {attacker.Type} / Target type : {targetController.Type}");
 
         health.ChangeHealth(-damage);
 

@@ -161,6 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ae508def6762224fa954e5fcfbaab68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  MaxHealth: 5
   characterRenderer: {fileID: 2467891652188766868}
   hitMaterial: {fileID: 2100000, guid: 756bbc06e25f2e54893ad0d5b1e1a51f, type: 2}
   hitFlashDuration: 0.1

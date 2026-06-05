@@ -12,14 +12,14 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
+    [Header("Health Configuration")]
+    [Tooltip("The maximum that the player can have")]
+    [Min(1)] [SerializeField] private int MaxHealth = 100;
+    
     [Header("Hit Flash")] 
     [SerializeField] private Renderer characterRenderer;
     [SerializeField] private Material hitMaterial;
     [SerializeField] private float hitFlashDuration = 0.1f;
-    
-    [Header("Health Configuration")]
-    [Tooltip("The maximum that the player can have")]
-    [Min(1)] private int MaxHealth = 100;
     
     private Material _originalMaterial;
 
