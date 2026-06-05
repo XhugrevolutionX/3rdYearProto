@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
@@ -12,6 +13,10 @@ public class Weapon : MonoBehaviour
     
     [Header("Shake")]
     [SerializeField] private CameraShakeData cameraShakeData;
+
+    [Header("Hit Stop")]
+    [SerializeField] private float hitStopDuration = 0.08f;
+    [SerializeField] private float hitStopTimeScale = 0.05f;
 
     [Header("Attack KnockBack (self)")]
     [SerializeField] private KnockBackData attackKnockBackData;
@@ -40,5 +45,13 @@ public class Weapon : MonoBehaviour
         impactParticles.transform.position = other.transform.position;
         impactParticles.Play();
         CameraShakeManager.Instance?.Shake(cameraShakeData);
+        StartCoroutine(HitStop());
+    }
+
+    private IEnumerator HitStop()
+    {
+        Time.timeScale = hitStopTimeScale;
+        yield return new WaitForSecondsRealtime(hitStopDuration);
+        Time.timeScale = 1f;
     }
 }
