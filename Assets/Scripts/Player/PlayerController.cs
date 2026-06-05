@@ -37,8 +37,8 @@ public class PlayerController : Controller
 
     private void Awake() => playerController = this;
 
-    private void OnEnable()  => MiniBossHealth.OnDeath += AddType;
-    private void OnDisable() => MiniBossHealth.OnDeath -= AddType;
+    private void OnEnable()  => MiniBossHealth.OnMiniBossDeath += AddType;
+    private void OnDisable() => MiniBossHealth.OnMiniBossDeath -= AddType;
 
     private void Start()
     {

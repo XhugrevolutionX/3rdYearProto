@@ -1,5 +1,8 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 /**
  * @jemoelablay
@@ -14,12 +17,26 @@ public class Health : MonoBehaviour
 {
     [Header("Health Configuration")]
     [Tooltip("The maximum that the player can have")]
-    [Min(1)] [SerializeField] private int MaxHealth = 100;
+    [Min(1)] [SerializeField] private int maxHealth = 100;
     
     [Header("Hit Flash")] 
     [SerializeField] private Renderer characterRenderer;
     [SerializeField] private Material hitMaterial;
     [SerializeField] private float hitFlashDuration = 0.1f;
+    
+    public event Action OnHealthChanged;
+    
+    public int MaxHealth => maxHealth;
+    public int CurrentHealth 
+    { 
+        get => _currentHealth;
+        private set
+        {
+            if (value > maxHealth) _currentHealth = maxHealth;
+            else if (value <= 0) { _currentHealth = 0; Death(); }
+            else _currentHealth = value;
+        }
+    }
     
     private Material _originalMaterial;
 
@@ -29,21 +46,13 @@ public class Health : MonoBehaviour
     /// Gets or sets the current health of the entity.
     /// Health is clamped between 0 and MaxHealth.
     /// </summary>
-    private int CurrentHealth 
-    { 
-        get => _currentHealth;
-        set
-        {
-            if (value > MaxHealth) _currentHealth = MaxHealth;
-            else if (value <= 0) { _currentHealth = 0; Death(); }
-            else _currentHealth = value;
-        }
-    }
 
-    protected virtual void Start()
+
+    protected virtual void Awake()
     {
         // Initialize the entity with the maximum health
-        CurrentHealth = MaxHealth;
+        CurrentHealth = maxHealth;
+
         
         _originalMaterial = characterRenderer.material;
     }
@@ -65,6 +74,7 @@ public class Health : MonoBehaviour
     {
         CurrentHealth += amount;
         if (amount < 0) TakeDamage(amount);
+        OnHealthChanged?.Invoke();
     }
 
     /// <summary>

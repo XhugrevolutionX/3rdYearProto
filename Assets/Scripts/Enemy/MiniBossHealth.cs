@@ -2,19 +2,19 @@ using System;
 
 public class MiniBossHealth : EnemyHealth
 {
-    public static event Action<TypeColor> OnDeath;
+    public static event Action<TypeColor> OnMiniBossDeath;
 
     private Controller _controller;
 
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
         _controller = GetComponent<Controller>();
     }
 
     protected override void Death()
     {
-        OnDeath?.Invoke(_controller.Type);
+        OnMiniBossDeath?.Invoke(_controller.Type);
         base.Death();
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +15,8 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance { get; private set; }
 
+    public event Action OnTimerEnd;
+    
     public float Timer => timer;
     
     private bool _gameFinished;
@@ -45,5 +48,7 @@ public class GameManager : MonoBehaviour
         Debug.Log(gridGenerator.NeutralZoneSpawnPoint);
         
         Instantiate(boss, gridGenerator.NeutralZoneSpawnPoint.position, Quaternion.identity);
+        
+        OnTimerEnd?.Invoke();
     }
 }
