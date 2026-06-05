@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("References")] 
+    [Header("References")]
     [SerializeField] private EnemyController boss;
+    [SerializeField] private ZoneManager zoneManager;
     
     [Header("Parameter")]
     [SerializeField] private float timer = 300f;
@@ -43,12 +44,10 @@ public class GameManager : MonoBehaviour
     private void OnTimerFinished()
     {
         _gameFinished = true;
-        Debug.Log(boss);
-        Debug.Log(gridGenerator);
-        Debug.Log(gridGenerator.NeutralZoneSpawnPoint);
-        
+
         Instantiate(boss, gridGenerator.NeutralZoneSpawnPoint.position, Quaternion.identity);
-        
+
+        zoneManager?.StartShrink();
         OnTimerEnd?.Invoke();
     }
 }

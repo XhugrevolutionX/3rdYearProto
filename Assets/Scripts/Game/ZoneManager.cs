@@ -3,34 +3,46 @@ using UnityEngine;
 public class ZoneManager : MonoBehaviour
 {
     [Header("Zone")]
-    [SerializeField] private Vector3 zoneCenter    = Vector3.zero;
-    [SerializeField] private float   initialRadius  = 40f;
-    [SerializeField] private float   finalRadius    = 4f;
-    [SerializeField] private float   shrinkDuration = 300f;
+    [SerializeField] private float initialRadius  = 40f;
+    [SerializeField] private float finalRadius    = 4f;
+    [SerializeField] private float shrinkDuration = 300f;
+
+    [Header("References")]
+    [Tooltip("If assigned, the zone moves toward the boss spawn point when shrinking starts.")]
+    [SerializeField] private GridGenerator gridGenerator;
 
     [Header("Behaviour")]
     [SerializeField] private bool shrinkOnStart = false;
 
     public float   CurrentRadius => _radius;
-    public Vector3 ZoneCenter    => zoneCenter;
+    public Vector3 ZoneCenter    => _center;
     public bool    IsShrinking   => _isShrinking;
 
     public bool IsInsideZone(Vector3 worldPos)
     {
-        float dx = worldPos.x - zoneCenter.x;
-        float dz = worldPos.z - zoneCenter.z;
+        float dx = worldPos.x - _center.x;
+        float dz = worldPos.z - _center.z;
         return dx * dx + dz * dz <= _radius * _radius;
     }
 
     private static readonly int PropCenter = Shader.PropertyToID("_ZoneCenter");
     private static readonly int PropRadius = Shader.PropertyToID("_ZoneRadius");
 
-    private float _radius;
-    private float _elapsed;
-    private bool  _isShrinking;
+    private float   _radius;
+    private float   _elapsed;
+    private bool    _isShrinking;
+    private Vector3 _center;        // current center (lerps toward _targetCenter)
+    private Vector3 _startCenter;   // center at the moment shrinking began
+    private Vector3 _targetCenter;  // boss spawn position
 
     private void Start()
     {
+        _center       = Vector3.zero;
+        _targetCenter = Vector3.zero;
+
+        if (gridGenerator != null && gridGenerator.NeutralZoneSpawnPoint != null)
+            _targetCenter = gridGenerator.NeutralZoneSpawnPoint.position;
+
         _radius = initialRadius;
         PushToShader();
 
@@ -43,16 +55,23 @@ public class ZoneManager : MonoBehaviour
         if (!_isShrinking || _radius <= finalRadius) return;
 
         _elapsed += Time.deltaTime;
-        _radius   = Mathf.Lerp(initialRadius, finalRadius, Mathf.Clamp01(_elapsed / shrinkDuration));
+        float t = Mathf.Clamp01(_elapsed / shrinkDuration);
+
+        _radius  = Mathf.Lerp(initialRadius, finalRadius, t);
+        _center  = Vector3.Lerp(_startCenter, _targetCenter, t);
 
         PushToShader();
     }
 
-    public void StartShrink() => _isShrinking = true;
+    public void StartShrink()
+    {
+        _startCenter = _center;
+        _isShrinking = true;
+    }
 
     private void PushToShader()
     {
-        Shader.SetGlobalVector(PropCenter, new Vector4(zoneCenter.x, zoneCenter.y, zoneCenter.z, 0f));
+        Shader.SetGlobalVector(PropCenter, new Vector4(_center.x, _center.y, _center.z, 0f));
         Shader.SetGlobalFloat(PropRadius, _radius);
     }
 }

@@ -89,12 +89,13 @@ public class PlayerController : Controller
     private void FixedUpdate()
     {
         TypeColor detected = TypeColor.WHITE;
+
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, raycastDistance, areaMask))
         {
             if (hit.collider != _lastAreaCollider)
             {
                 _lastAreaCollider = hit.collider;
-                _cachedArea = hit.collider.GetComponent<Area>();
+                _cachedArea = hit.collider.transform.parent.GetComponent<Area>();
             }
             if (_cachedArea) detected = _cachedArea.Type;
         }
