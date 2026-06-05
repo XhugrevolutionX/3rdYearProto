@@ -227,7 +227,7 @@ MonoBehaviour:
   type: 0
   typeDamageBonus: 1
   attackDamage: 1
-  attackCooldown: 0.5
+  attackCooldown: 0.15
   raycastDistance: 1.5
   areaMask:
     serializedVersion: 2
@@ -271,9 +271,9 @@ MonoBehaviour:
   hitMaterial: {fileID: 2100000, guid: 756bbc06e25f2e54893ad0d5b1e1a51f, type: 2}
   hitFlashDuration: 0.1
   hitShakeData:
-    Amplitude: 0
-    Frequency: 0
-    Duration: 0
+    Amplitude: 2
+    Frequency: 1
+    Duration: 0.2
 --- !u!114 &5617554649318947200
 MonoBehaviour:
   m_ObjectHideFlags: 0
