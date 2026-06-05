@@ -110615,13 +110615,8 @@ MonoBehaviour:
   zoneCenter: {x: 0, y: 3, z: 0}
   initialRadius: 40
   finalRadius: 4
-  shrinkDuration: 300
-  overlayMaterial: {fileID: 2100000, guid: 3681a562d51c9654bb40af31be16475b, type: 2}
-  overlayExtent: 150
-  lineMaterial: {fileID: 2100000, guid: 08dc2073bfd5f0a43baeafd287035e37, type: 2}
-  lineWidth: 0.25
-  lineSegments: 128
-  gridGenerator: {fileID: 1337199080}
+  shrinkDuration: 20
+  shrinkOnStart: 0
 --- !u!1 &1111124909
 GameObject:
   m_ObjectHideFlags: 0
