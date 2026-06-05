@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.AI.Navigation;
 
 public enum GridType { Hex, Square, Octagon }
 
@@ -138,6 +139,10 @@ public class GridGenerator : MonoBehaviour
             case GridType.Square:  GenerateSquare();  break;
             case GridType.Octagon: GenerateOctagon(); break;
         }
+
+        var navMeshSurface = GetComponent<NavMeshSurface>();
+        if (navMeshSurface) navMeshSurface.BuildNavMesh();
+        else Debug.LogWarning("No NavMesh surface found");
     }
 
     // ── Hex ──────────────────────────────────────────────────────────────────
