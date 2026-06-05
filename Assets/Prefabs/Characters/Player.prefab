@@ -991,7 +991,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7434498302926140362, guid: 66209373dd5e22140a220a74414d244b, type: 3}
       propertyPath: m_Name
-      value: BlackAndWhiteImpact
+      value: ScreenImpact
+      objectReference: {fileID: 0}
+    - target: {fileID: 7434498302926140362, guid: 66209373dd5e22140a220a74414d244b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7492697174560805583, guid: 66209373dd5e22140a220a74414d244b, type: 3}
       propertyPath: playOnAwake
