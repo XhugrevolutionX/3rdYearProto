@@ -4,6 +4,7 @@ public class Weapon : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Controller controller;
+    [SerializeField] private ParticleSystem impactParticles;
 
     [Header("KnockBack")]
     [SerializeField] private float knockBackForce;
@@ -33,9 +34,11 @@ public class Weapon : MonoBehaviour
 
         if (!hit || _movement == null) return;
         
-        Vector3 recoilDir = (controller.transform.position - other.transform.position).normalized;
-        _movement.KnockBack(recoilDir, attackKnockBackData.Force, attackKnockBackData.Duration);
+        // Vector3 recoilDir = (controller.transform.position - other.transform.position).normalized;
+        // _movement.KnockBack(recoilDir, attackKnockBackData.Force, attackKnockBackData.Duration);
         
+        impactParticles.transform.position = other.transform.position;
+        impactParticles.Play();
         CameraShakeManager.Instance?.Shake(cameraShakeData);
     }
 }

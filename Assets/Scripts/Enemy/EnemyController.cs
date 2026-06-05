@@ -51,6 +51,8 @@ public class EnemyController : Controller
 
     private void OnCollisionEnter(Collision collision)
     {
+        if(Movement.IsKnockedBack) return;
+        
         CombatUtils.ApplyHit<PlayerHealth>(collision.gameObject,
             this, 
             contactDamage,

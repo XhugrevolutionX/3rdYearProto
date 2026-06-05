@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 /**
@@ -11,10 +12,16 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
+    [Header("Hit Flash")] 
+    [SerializeField] private Renderer characterRenderer;
+    [SerializeField] private Material hitMaterial;
+    [SerializeField] private float hitFlashDuration = 0.1f;
+    
     [Header("Health Configuration")]
     [Tooltip("The maximum that the player can have")]
-    [Min(1)]
-    public int MaxHealth = 100;
+    [Min(1)] private int MaxHealth = 100;
+    
+    private Material _originalMaterial;
 
     int _currentHealth;
 
@@ -37,6 +44,8 @@ public class Health : MonoBehaviour
     {
         // Initialize the entity with the maximum health
         CurrentHealth = MaxHealth;
+        
+        _originalMaterial = characterRenderer.material;
     }
     
     /// <summary>
@@ -44,6 +53,7 @@ public class Health : MonoBehaviour
     /// </summary>
     protected virtual void TakeDamage(int amount)
     {
+        StartCoroutine(HitFlash());
         Debug.Log($"Entity took {Mathf.Abs(amount)} damage");
     }
     
@@ -63,5 +73,12 @@ public class Health : MonoBehaviour
     protected virtual void Death()
     {
         Debug.Log("Entity is dead");
+    }
+
+    private IEnumerator HitFlash()
+    {
+        characterRenderer.material = hitMaterial;
+        yield return new WaitForSeconds(hitFlashDuration);
+        characterRenderer.material = _originalMaterial;
     }
 }

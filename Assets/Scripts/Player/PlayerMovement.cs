@@ -16,9 +16,13 @@ public class PlayerMovement : Movement
     [Tooltip("The maximum distance for the sphere cast")]
     [SerializeField] private float sphereMaxDistance;
 
+    private Camera _mainCamera;
+
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
+        
+        _mainCamera = Camera.main;
     }
     
     private void Jump()
@@ -29,7 +33,7 @@ public class PlayerMovement : Movement
 
     protected override void RotateView()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        Ray ray = _mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
         Plane groundPlane = new Plane(Vector3.up, transform.position);
 
         if (groundPlane.Raycast(ray, out float distance))

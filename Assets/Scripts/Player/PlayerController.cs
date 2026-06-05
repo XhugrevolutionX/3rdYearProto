@@ -6,11 +6,13 @@ using UnityEngine.InputSystem;
 public class PlayerController : Controller
 {
     public static PlayerController playerController;
-
+    
     [Header("Area Detection")]
     [SerializeField] private float raycastDistance = 1.5f;
     [SerializeField] private LayerMask areaMask;
 
+    #region Type Color Properties
+    
     private TypeDisplay typeDisplay;
     private List<TypeColor> _unlockedTypes = new();
     private int _typeIndex;
@@ -31,6 +33,8 @@ public class PlayerController : Controller
 
     public override TypeColor Type => _selectedType == TypeColor.WHITE ? _areaType : _selectedType;
 
+    #endregion
+
     private void Awake() => playerController = this;
 
     private void OnEnable()  => MiniBossHealth.OnDeath += AddType;
@@ -41,6 +45,7 @@ public class PlayerController : Controller
         GetComponentInChildren<CinemachineCamera>().transform.parent = null;
         
         typeDisplay = GetComponent<TypeDisplay>();
+        
         _unlockedTypes.Add(TypeColor.WHITE);
     }
 

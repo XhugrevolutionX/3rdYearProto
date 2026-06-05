@@ -144,7 +144,6 @@ MonoBehaviour:
   attackCooldown: 0.5
   contactDamage: 1
   knockBackForce: 15
-  knockBackUpForce: 1
   knockBackDuration: 0.5
   detectionRadius: 10
   playerMask:
@@ -162,7 +161,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ae508def6762224fa954e5fcfbaab68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  MaxHealth: 5
+  characterRenderer: {fileID: 2467891652188766868}
+  hitMaterial: {fileID: 2100000, guid: 756bbc06e25f2e54893ad0d5b1e1a51f, type: 2}
+  hitFlashDuration: 0.1
 --- !u!114 &5126417146375101268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,6 +323,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d5e76b02570efe4f9fa12a56e758241, type: 3}
+--- !u!23 &2467891652188766868 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7257253192441436532, guid: 4d5e76b02570efe4f9fa12a56e758241, type: 3}
+  m_PrefabInstance: {fileID: 4140700101572584472}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4538504382812324851 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4d5e76b02570efe4f9fa12a56e758241, type: 3}

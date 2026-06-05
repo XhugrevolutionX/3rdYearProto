@@ -10,6 +10,8 @@ public class Movement : MonoBehaviour
     [SerializeField] private float speed = 5f;
     [SerializeField] private float rotationSpeed = 10f;
     [SerializeField] private float knockBackResistance = 5f;
+    
+    public bool IsKnockedBack => _isKnockedBack;
 
     protected Rigidbody _rb;
     protected Vector2 _direction;
