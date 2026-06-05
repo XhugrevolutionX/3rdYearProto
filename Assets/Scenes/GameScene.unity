@@ -98492,6 +98492,10 @@ PrefabInstance:
       propertyPath: healthBarSlider
       value: 
       objectReference: {fileID: 1399790576}
+    - target: {fileID: 6077743227604031575, guid: 88756b67da3d1364fbf7d6638ae34908, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -110564,6 +110568,60 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1110149904}
   m_Mesh: {fileID: 3733908942366842210, guid: fa5150bf61b7c23459d879a9c15d1b8b, type: 3}
+--- !u!1 &1110501457
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1110501458}
+  - component: {fileID: 1110501459}
+  m_Layer: 0
+  m_Name: ZoneManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1110501458
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1110501457}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2047573246}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1110501459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1110501457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7235fa3db1acfb34fa107302498a6db0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ZoneManager
+  zoneCenter: {x: 0, y: 3, z: 0}
+  initialRadius: 40
+  finalRadius: 4
+  shrinkDuration: 300
+  overlayMaterial: {fileID: 2100000, guid: 3681a562d51c9654bb40af31be16475b, type: 2}
+  overlayExtent: 150
+  lineMaterial: {fileID: 2100000, guid: 08dc2073bfd5f0a43baeafd287035e37, type: 2}
+  lineWidth: 0.25
+  lineSegments: 128
+  gridGenerator: {fileID: 1337199080}
 --- !u!1 &1111124909
 GameObject:
   m_ObjectHideFlags: 0
@@ -126785,7 +126843,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -209426,6 +209484,7 @@ Transform:
   - {fileID: 1022726061}
   - {fileID: 1414891336}
   - {fileID: 498055407}
+  - {fileID: 1110501458}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2049527523
