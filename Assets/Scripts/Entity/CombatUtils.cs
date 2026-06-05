@@ -1,18 +1,19 @@
+using System;
 using UnityEngine;
 
+[Serializable]
 public struct KnockBackData
 {
     public float Force;
-    public float UpForce;
     public float Duration;
 }
 
 public static class CombatUtils
 {
-    public static void ApplyHit<T>(GameObject target, Controller attacker, int damage, KnockBackData knockBack) where T : Health
+    public static bool ApplyHit<T>(GameObject target, Controller attacker, int damage, KnockBackData knockBack) where T : Health
     {
         T health = target.GetComponentInParent<T>();
-        if (!health) return;
+        if (!health) return false;
 
         Controller targetController = target.GetComponentInParent<Controller>();
         if (attacker.HasTypeDamageBonus && targetController != null && targetController.Type == attacker.Type) damage *= 2;
@@ -22,10 +23,10 @@ public static class CombatUtils
         health.ChangeHealth(-damage);
 
         Movement movement = target.GetComponentInParent<Movement>();
-        if (!movement) return;
+        if (!movement) return false;
 
         Vector3 direction = (target.transform.position - attacker.transform.position).normalized;
-        direction.y = knockBack.UpForce;
         movement.KnockBack(direction, knockBack.Force, knockBack.Duration);
+        return true;
     }
 }

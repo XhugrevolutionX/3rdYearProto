@@ -7,7 +7,6 @@ public class EnemyController : Controller
 
     [Header("KnockBack")]
     [SerializeField] private float knockBackForce = 10f;
-    [SerializeField] private float knockBackUpForce = 1f;
     [SerializeField] private float knockBackDuration = 0.5f;
     
     [Header("Detection")]
@@ -55,7 +54,7 @@ public class EnemyController : Controller
         CombatUtils.ApplyHit<PlayerHealth>(collision.gameObject,
             this, 
             contactDamage,
-            new KnockBackData { Force = knockBackForce, UpForce = knockBackUpForce, Duration = knockBackDuration }
+            new KnockBackData { Force = knockBackForce, Duration = knockBackDuration }
         );
     }
 

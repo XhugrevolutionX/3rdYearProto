@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -37,6 +38,8 @@ public class PlayerController : Controller
 
     private void Start()
     {
+        GetComponentInChildren<CinemachineCamera>().transform.parent = null;
+        
         typeDisplay = GetComponent<TypeDisplay>();
         _unlockedTypes.Add(TypeColor.WHITE);
     }
