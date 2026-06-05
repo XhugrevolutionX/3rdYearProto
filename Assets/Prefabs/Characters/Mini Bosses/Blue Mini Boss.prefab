@@ -259,7 +259,7 @@ MonoBehaviour:
   typeDamageBonus: 0
   attackDamage: 15
   attackCooldown: 0.5
-  contactDamage: 2
+  contactDamage: 15
   knockBackForce: 40
   knockBackDuration: 0.75
   detectionRadius: 15
