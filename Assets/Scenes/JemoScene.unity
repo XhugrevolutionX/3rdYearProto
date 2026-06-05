@@ -199096,8 +199096,6 @@ MonoBehaviour:
   initialRadius: 40
   finalRadius: 4
   shrinkDuration: 20
-  overlayMaterial: {fileID: 2100000, guid: 3681a562d51c9654bb40af31be16475b, type: 2}
-  overlayExtent: 150
   shrinkOnStart: 1
 --- !u!1 &1917467938
 GameObject:
