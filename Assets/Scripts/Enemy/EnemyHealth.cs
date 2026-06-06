@@ -5,7 +5,7 @@ using Random = UnityEngine.Random;
 public class EnemyHealth : Health
 {
     [Header("Drop")] 
-    [SerializeField] private XP xpPrefab;
+    [SerializeField] private XP[] xpPrefabs;
     [SerializeField] private int minDrop;
     [SerializeField] private int maxDrop;
     [SerializeField] private float minForce = 5f;
@@ -24,12 +24,12 @@ public class EnemyHealth : Health
 
     private void DropXP()
     {
-        if (xpPrefab == null) return;
+        if (xpPrefabs.Length == 0) return;
 
         int count = Random.Range(minDrop, maxDrop + 1);
         for (int i = 0; i < count; i++)
         {
-            var xp = Instantiate(xpPrefab, transform.position, Quaternion.identity);
+            var xp = Instantiate(xpPrefabs[Random.Range(0, xpPrefabs.Length)], transform.position, Quaternion.identity);
 
             Vector3 horizontal = Random.insideUnitSphere;
             horizontal.y = 0f;

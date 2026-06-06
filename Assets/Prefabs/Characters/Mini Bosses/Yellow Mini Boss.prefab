@@ -282,7 +282,10 @@ MonoBehaviour:
   characterRenderer: {fileID: 5597281822872873603}
   hitMaterial: {fileID: 2100000, guid: 756bbc06e25f2e54893ad0d5b1e1a51f, type: 2}
   hitFlashDuration: 0.1
-  xpPrefab: {fileID: 3362081325621664219, guid: 70bdb6b435a2e0a4d81257624dc95417, type: 3}
+  xpPrefabs:
+  - {fileID: 3362081325621664219, guid: 70bdb6b435a2e0a4d81257624dc95417, type: 3}
+  - {fileID: 4357467251596773722, guid: 4b5d2769ff5635e4e9210263fb782625, type: 3}
+  - {fileID: 1981377092181669169, guid: e1f711f4080858e4a90a9ba7aa6221e9, type: 3}
   minDrop: 45
   maxDrop: 60
   minForce: 5
