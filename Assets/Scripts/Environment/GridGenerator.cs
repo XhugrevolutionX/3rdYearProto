@@ -41,6 +41,14 @@ public class GridGenerator : MonoBehaviour
     [SerializeField] private HexBiomeType[] hexBiomeTypes = {};
     [SerializeField] private int            hexRadius = 5;
     [SerializeField] private float          tileScale = 1.5f;
+    
+    [Header("Material Colors")]
+    [SerializeField] private Material redMaterial;
+    [SerializeField] private Material greenMaterial;
+    [SerializeField] private Material blueMaterial;
+    [SerializeField] private Material yellowMaterial;
+    [SerializeField] private Material orangeMaterial;
+    [SerializeField] private Material purpleMaterial;
 
     [Header("Biome Generation")]
     [Tooltip("Number of Voronoi regions. 0 = one region per biome type. " +

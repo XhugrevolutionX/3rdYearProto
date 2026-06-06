@@ -82,6 +82,15 @@ public class GridGenerator_Editor : Editor
             new GUIContent("Hex Prefab"));
 
         EditorGUILayout.Space(4);
+        EditorGUILayout.LabelField("Material Colors", EditorStyles.boldLabel);
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("redMaterial"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("greenMaterial"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("blueMaterial"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("yellowMaterial"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("orangeMaterial"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("purpleMaterial"));
+
+        EditorGUILayout.Space(4);
 
         // Biome types array — each entry folds open to show its name + mesh list.
         var biomesProp = serializedObject.FindProperty("hexBiomeTypes");

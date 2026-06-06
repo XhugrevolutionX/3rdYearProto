@@ -63,6 +63,12 @@ public class PlayerController : Controller
         SelectedType = _unlockedTypes[_typeIndex];
     }
 
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        if (!context.started) return;
+        _currentInteractable?.Interact();
+    }
+
     #endregion
 
     protected override void Attack()
@@ -81,6 +87,26 @@ public class PlayerController : Controller
         _unlockedTypes.RemoveAll(t => t != TypeColor.WHITE);
         _typeIndex = 0;
         SelectedType = TypeColor.WHITE;
+    }
+
+    private IInteractable _currentInteractable;
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent(out IInteractable interactable))
+        {
+            _currentInteractable = interactable;
+            _currentInteractable.Enter();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.TryGetComponent(out IInteractable interactable) && _currentInteractable == interactable)
+        {
+            _currentInteractable.Exit();
+            _currentInteractable = null;
+        }
     }
 
     private Collider _lastAreaCollider;
