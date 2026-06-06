@@ -184,7 +184,7 @@ GameObject:
   - component: {fileID: 2580833051618206382}
   - component: {fileID: 3867011284375230144}
   - component: {fileID: 4819857725518613748}
-  - component: {fileID: 5617554649318947200}
+  - component: {fileID: 5625990702389222216}
   - component: {fileID: 6232487642596597557}
   - component: {fileID: 4033788012362864995}
   - component: {fileID: 5577584621497500263}
@@ -290,7 +290,7 @@ MonoBehaviour:
   _startXpToNextLevel: 100
   _xpMultiplier: 1.2
   _damagePerLevel: 1
---- !u!114 &5617554649318947200
+--- !u!114 &5625990702389222216
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -299,7 +299,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2833167095438190592}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d51a18e71a38df4eaddacefb5ca362d, type: 3}
+  m_Script: {fileID: 11500000, guid: 6643e2c11205d4b4faae585716f341b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDisplay
   healthBarSlider: {fileID: 0}
@@ -312,7 +312,10 @@ MonoBehaviour:
   blueColor: {r: 0, g: 0, b: 1, a: 1}
   yellowColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   orangeColor: {r: 1, g: 0.5, b: 0, a: 1}
-  purpleColor: {r: 0.6566658, g: 0, b: 1, a: 1}
+  purpleColor: {r: 0.5, g: 0, b: 0.5, a: 1}
+  particles:
+  - {fileID: 5718497064230270266}
+  - {fileID: 5977792153153154236}
 --- !u!114 &6232487642596597557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -955,6 +958,16 @@ ParticleSystem:
 --- !u!4 &4280597139774928259 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3498183984017049544, guid: be2c194f6bac75648b074d4e588a27c0, type: 3}
+  m_PrefabInstance: {fileID: 858982085465633355}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &5718497064230270266 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4951595021264832369, guid: be2c194f6bac75648b074d4e588a27c0, type: 3}
+  m_PrefabInstance: {fileID: 858982085465633355}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &5977792153153154236 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6421805334663651063, guid: be2c194f6bac75648b074d4e588a27c0, type: 3}
   m_PrefabInstance: {fileID: 858982085465633355}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3707834214485846941
