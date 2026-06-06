@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class GameManager : MonoBehaviour
 
     [Header("Grid")]
     [SerializeField] private GridGenerator gridGenerator;
+    
+    [Header("Events")]
+    [SerializeField] private UnityEvent OnGameOver;
 
     public static GameManager Instance { get; private set; }
 
@@ -27,6 +31,8 @@ public class GameManager : MonoBehaviour
         if(Instance && Instance != this) Destroy(gameObject);
         else Instance = this;
     }
+
+    private void Start() => Time.timeScale = 1f;
 
     private void Update()
     {
@@ -49,5 +55,11 @@ public class GameManager : MonoBehaviour
 
         zoneManager?.StartShrink();
         OnTimerEnd?.Invoke();
+    }
+
+    public void GameOver()
+    {
+        OnGameOver?.Invoke();
+        Time.timeScale = 0;
     }
 }

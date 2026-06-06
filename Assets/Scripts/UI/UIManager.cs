@@ -6,6 +6,7 @@ public class UIManager : MonoBehaviour
 {
     [Header("References")] 
     [SerializeField] private TextMeshProUGUI timerTmp;
+    [SerializeField] private GameManager gameOverPanel;
     
     [Header("Boss")]
     [SerializeField] private TextMeshProUGUI bossHealthTmp;
