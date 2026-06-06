@@ -248,7 +248,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement_Networked
   viewTransform: {fileID: 3985088581997925639}
   speed: 8
-  rotationSpeed: 3
+  rotationSpeed: 10
   knockBackResistance: 5
   jumpForce: 20
   groundMask:
@@ -502,6 +502,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: b1499f8a-07b1-4f9b-8ee2-d07fa269e23a
     m_ActionName: 'Player/Switch[/Mouse/rightButton]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2580833051618206382}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: OnLook
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 19b37689-6600-49ee-88fb-bddd05180b65
+    m_ActionName: 'Player/Look[/DualShock4GamepadHID/rightStick]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: 

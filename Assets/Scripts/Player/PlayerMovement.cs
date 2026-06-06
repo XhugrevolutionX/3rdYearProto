@@ -17,14 +17,32 @@ public class PlayerMovement : Movement
     [SerializeField] private float sphereMaxDistance;
 
     private Camera _mainCamera;
+    private Vector2 _lookInput;
+    private bool _isGamepad;
 
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
-        
         _mainCamera = Camera.main;
     }
-    
+
+    #region Input
+
+    public void OnMove(InputAction.CallbackContext context) => _direction = context.ReadValue<Vector2>();
+
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if(context.started && CheckCollisions()) Jump();
+    }
+
+    public void OnLook(InputAction.CallbackContext context)
+    {
+        _lookInput = context.ReadValue<Vector2>();
+        _isGamepad = context.control.device is Gamepad;
+    }
+
+    #endregion
+
     private void Jump()
     {
         _rb.linearVelocity = new Vector3(_rb.linearVelocity.x, 0, _rb.linearVelocity.z);
@@ -33,17 +51,31 @@ public class PlayerMovement : Movement
 
     protected override void RotateView()
     {
+        if (_isGamepad)
+        {
+            if (_lookInput.sqrMagnitude > 0.01f)
+            {
+                Vector3 direction = new Vector3(_lookInput.x, 0f, _lookInput.y);
+                Quaternion target = Quaternion.LookRotation(direction);
+                viewTransform.rotation = Quaternion.Slerp(viewTransform.rotation, target, rotationSpeed * Time.deltaTime);
+            }
+            return;
+        }
+
         Ray ray = _mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
-        Plane groundPlane = new Plane(Vector3.up, transform.position);
+        Plane groundPlane = new Plane(Vector3.up, viewTransform.position);
 
         if (groundPlane.Raycast(ray, out float distance))
         {
             Vector3 worldPoint = ray.GetPoint(distance);
-            Vector3 direction = worldPoint - transform.position;
+            Vector3 direction = worldPoint - viewTransform.position;
             direction.y = 0f;
 
             if (direction.sqrMagnitude > 0.01f)
-                transform.rotation = Quaternion.LookRotation(direction);
+            {
+                Quaternion target = Quaternion.LookRotation(direction);
+                viewTransform.rotation = Quaternion.Slerp(viewTransform.rotation, target, rotationSpeed * Time.deltaTime);
+            }
         }
     }
 
@@ -65,15 +97,4 @@ public class PlayerMovement : Movement
         Gizmos.color = grounded ? Color.green : Color.red;
         Gizmos.DrawWireSphere(transform.position + Vector3.down * sphereMaxDistance, sphereRadius);
     }
-
-    #region Input
-
-    public void OnMove(InputAction.CallbackContext context) => _direction = context.ReadValue<Vector2>();
-
-    public void OnJump(InputAction.CallbackContext context)
-    {
-        if(context.started && CheckCollisions()) Jump();
-    }
-
-    #endregion
 }

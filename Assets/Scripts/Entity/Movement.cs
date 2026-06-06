@@ -4,11 +4,11 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private Transform viewTransform;
+    [SerializeField] protected Transform viewTransform;
 
     [Header("Parameters")]
     [SerializeField] private float speed = 5f;
-    [SerializeField] private float rotationSpeed = 10f;
+    [SerializeField] protected float rotationSpeed = 10f;
     [SerializeField] private float knockBackResistance = 5f;
     
     public bool IsKnockedBack => _isKnockedBack;
