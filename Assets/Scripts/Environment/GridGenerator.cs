@@ -50,6 +50,14 @@ public class GridGenerator : MonoBehaviour
     [SerializeField] private Material orangeMaterial;
     [SerializeField] private Material purpleMaterial;
 
+    [Header("Mini Bosses")] 
+    [SerializeField] private EnemyController redMiniBoss;
+    [SerializeField] private EnemyController greenMiniBoss;
+    [SerializeField] private EnemyController blueMiniBoss;
+    [SerializeField] private EnemyController yellowMiniBoss;
+    [SerializeField] private EnemyController orangeMiniBoss;
+    [SerializeField] private EnemyController purpleMiniBoss;
+
     [Header("Biome Generation")]
     [Tooltip("Number of Voronoi regions. 0 = one region per biome type. " +
              "Use a multiple of biome types to get several blobs per type.")]
@@ -60,8 +68,8 @@ public class GridGenerator : MonoBehaviour
     [Header("Mini Boss Spawn Points")]
     [Tooltip("Create one spawn-point Transform per biome type, placed at the centroid of that type's largest cluster.")]
     [SerializeField] private bool spawnBiomeSpawnPoints = true;
-    [Tooltip("Optional prefab instantiated at each spawn point. Leave empty for a plain empty GameObject.")]
-    [SerializeField] private GameObject spawnPointPrefab;
+    [Tooltip("MiniBossPortal prefab instantiated at each spawn point.")]
+    [SerializeField] private MiniBossPortal spawnPointPrefab;
     [Tooltip("Height above the ground at which spawn points are placed.")]
     [SerializeField] private float spawnPointYOffset = 0.5f;
 
@@ -487,26 +495,19 @@ public class GridGenerator : MonoBehaviour
 
             spawnPos.y += spawnPointYOffset;
 
-            GameObject spawnGo;
-            if (spawnPointPrefab != null)
-            {
-                spawnGo = Instantiate(spawnPointPrefab, spawnPos, Quaternion.identity, spawnRoot.transform);
-            }
-            else
-            {
-                spawnGo = new GameObject();
-                spawnGo.transform.SetParent(spawnRoot.transform);
-                spawnGo.transform.position = spawnPos;
-            }
-            spawnGo.name = $"SpawnPoint_{hexBiomeTypes[typeIndex].name}";
+            if (spawnPointPrefab == null) continue;
+
+            var portal = Instantiate(spawnPointPrefab, spawnPos, Quaternion.identity, spawnRoot.transform);
+            portal.name = $"SpawnPoint_{hexBiomeTypes[typeIndex].name}";
+            portal.MiniBossController = MiniBossForColor(hexBiomeTypes[typeIndex].color);
 
             var mat = MaterialForColor(hexBiomeTypes[typeIndex].color);
             if (mat != null)
-                foreach (var rend in spawnGo.GetComponentsInChildren<Renderer>())
+                foreach (var rend in portal.GetComponentsInChildren<Renderer>())
                     rend.sharedMaterial = mat;
 
-            BiomeSpawnPoints.Add(spawnGo.transform);
-            MiniBossSpawnPointsByBiome[hexBiomeTypes[typeIndex].color] = spawnGo.transform;
+            BiomeSpawnPoints.Add(portal.transform);
+            MiniBossSpawnPointsByBiome[hexBiomeTypes[typeIndex].color] = portal.transform;
         }
     }
 
@@ -641,6 +642,17 @@ public class GridGenerator : MonoBehaviour
         width  = b.size.x * s.x;
         depth  = b.size.z * s.z;
     }
+
+    private EnemyController MiniBossForColor(TypeColor color) => color switch
+    {
+        TypeColor.RED    => redMiniBoss,
+        TypeColor.GREEN  => greenMiniBoss,
+        TypeColor.BLUE   => blueMiniBoss,
+        TypeColor.YELLOW => yellowMiniBoss,
+        TypeColor.ORANGE => orangeMiniBoss,
+        TypeColor.PURPLE => purpleMiniBoss,
+        _                => null
+    };
 
     private Material MaterialForColor(TypeColor color) => color switch
     {

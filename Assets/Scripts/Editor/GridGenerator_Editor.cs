@@ -82,7 +82,6 @@ public class GridGenerator_Editor : Editor
             new GUIContent("Hex Prefab"));
 
         EditorGUILayout.Space(4);
-        EditorGUILayout.LabelField("Material Colors", EditorStyles.boldLabel);
         EditorGUILayout.PropertyField(serializedObject.FindProperty("redMaterial"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("greenMaterial"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("blueMaterial"));
@@ -130,11 +129,19 @@ public class GridGenerator_Editor : Editor
                 MessageType.None);
         }
 
-        // Mini Boss Spawn Points — [Header] on spawnBiomeSpawnPoints renders the section title.
+        EditorGUILayout.Space(4);
         EditorGUILayout.PropertyField(serializedObject.FindProperty("spawnBiomeSpawnPoints"),
-            new GUIContent("Spawn Points", "Create one spawn-point per biome type at the centroid of its largest cluster."));
+            new GUIContent("Spawn Points", "Create one portal per biome type at the centroid of its largest cluster."));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("spawnPointPrefab"),
-            new GUIContent("Spawn Point Prefab", "Optional. Leave empty for a plain empty GameObject."));
+            new GUIContent("Portal Prefab"));
+
+        EditorGUILayout.Space(4);
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("redMiniBoss"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("greenMiniBoss"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("blueMiniBoss"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("yellowMiniBoss"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("orangeMiniBoss"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("purpleMiniBoss"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("spawnPointYOffset"),
             new GUIContent("Y Offset", "Height above the ground at which spawn points are placed."));
 
