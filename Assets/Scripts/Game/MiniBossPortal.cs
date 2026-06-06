@@ -1,8 +1,10 @@
+using TMPro;
 using UnityEngine;
 
 public class MiniBossPortal : MonoBehaviour, IInteractable
 {
     [Header("References")] 
+    [SerializeField] private TextMeshProUGUI interactTmp;
     public EnemyController MiniBossController;
     
     
@@ -16,11 +18,11 @@ public class MiniBossPortal : MonoBehaviour, IInteractable
 
     public void Enter()
     {
-        Debug.Log("Enter");
+        interactTmp.gameObject.SetActive(true);
     }
 
     public void Exit()
     {
-        Debug.Log("Exit");
+        interactTmp.gameObject.SetActive(false);
     }
 }
