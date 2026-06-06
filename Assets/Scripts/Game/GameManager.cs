@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     
     [Header("Parameter")]
     [SerializeField] private float timer = 300f;
+    [SerializeField] private Vector3 bossSpawnOffset = new(0, 0, -3f);
 
     [Header("Grid")]
     [SerializeField] private GridGenerator gridGenerator;
@@ -51,7 +52,7 @@ public class GameManager : MonoBehaviour
     {
         _gameFinished = true;
 
-        Instantiate(boss, gridGenerator.NeutralZoneSpawnPoint.position, Quaternion.identity);
+        Instantiate(boss, gridGenerator.NeutralZoneSpawnPoint.position + bossSpawnOffset, Quaternion.Euler(0f, 180f, 0f));
 
         zoneManager?.StartShrink();
         OnTimerEnd?.Invoke();
