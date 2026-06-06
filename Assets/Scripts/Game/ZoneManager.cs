@@ -58,16 +58,19 @@ public class ZoneManager : MonoBehaviour
 
     private void Update()
     {
-        if (!_isShrinking || _radius <= finalRadius) return;
+        if (_isShrinking && _radius > finalRadius)
+        {
+            _elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(_elapsed / shrinkDuration);
 
-        _elapsed += Time.deltaTime;
-        float t = Mathf.Clamp01(_elapsed / shrinkDuration);
+            _radius = Mathf.Lerp(initialRadius, finalRadius, t);
+            _center = Vector3.Lerp(_startCenter, _targetCenter, t);
 
-        _radius  = Mathf.Lerp(initialRadius, finalRadius, t);
-        _center  = Vector3.Lerp(_startCenter, _targetCenter, t);
+            PushToShader();
+        }
 
-        PushToShader();
-        TickOutOfZoneDamage();
+        if (_isShrinking)
+            TickOutOfZoneDamage();
     }
 
     private void TickOutOfZoneDamage()
