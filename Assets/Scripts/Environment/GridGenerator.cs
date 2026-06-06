@@ -499,6 +499,12 @@ public class GridGenerator : MonoBehaviour
                 spawnGo.transform.position = spawnPos;
             }
             spawnGo.name = $"SpawnPoint_{hexBiomeTypes[typeIndex].name}";
+
+            var mat = MaterialForColor(hexBiomeTypes[typeIndex].color);
+            if (mat != null)
+                foreach (var rend in spawnGo.GetComponentsInChildren<Renderer>())
+                    rend.sharedMaterial = mat;
+
             BiomeSpawnPoints.Add(spawnGo.transform);
             MiniBossSpawnPointsByBiome[hexBiomeTypes[typeIndex].color] = spawnGo.transform;
         }
@@ -635,6 +641,17 @@ public class GridGenerator : MonoBehaviour
         width  = b.size.x * s.x;
         depth  = b.size.z * s.z;
     }
+
+    private Material MaterialForColor(TypeColor color) => color switch
+    {
+        TypeColor.RED    => redMaterial,
+        TypeColor.GREEN  => greenMaterial,
+        TypeColor.BLUE   => blueMaterial,
+        TypeColor.YELLOW => yellowMaterial,
+        TypeColor.ORANGE => orangeMaterial,
+        TypeColor.PURPLE => purpleMaterial,
+        _                => null
+    };
 
     private void ApplyRandomColor(GameObject cell)
     {
