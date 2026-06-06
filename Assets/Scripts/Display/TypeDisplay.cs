@@ -26,6 +26,9 @@ public class TypeDisplay : Display
             TypeColor.PURPLE => purpleColor,
             _                => whiteColor
         };
-        characterRenderer.material.SetColor("_Color", color);
+        
+        ApplyColor(color);
     }
+    
+    protected virtual void ApplyColor(Color color) => characterRenderer.material.SetColor("_Color", color);
 }

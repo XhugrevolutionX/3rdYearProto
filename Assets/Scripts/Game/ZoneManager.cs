@@ -3,22 +3,27 @@ using UnityEngine;
 public class ZoneManager : MonoBehaviour
 {
     [Header("Zone")]
-    [SerializeField] private float initialRadius  = 40f;
-    [SerializeField] private float finalRadius    = 4f;
+    [SerializeField] private float initialRadius = 40f;
+    [SerializeField] private float finalRadius = 4f;
     [SerializeField] private float shrinkDuration = 300f;
 
     [Header("References")]
     [Tooltip("If assigned, the zone moves toward the boss spawn point when shrinking starts.")]
     [SerializeField] private GridGenerator gridGenerator;
+    [SerializeField] private PlayerHealth playerHealth;
+
+    [Header("Out-of-Zone Damage")]
+    [SerializeField] private int   outOfZoneDamage = 10;
+    [SerializeField] private float damageInterval = 1f;
 
     [Header("Behaviour")]
     [SerializeField] private bool shrinkOnStart = false;
 
-    public float   CurrentRadius => _radius;
-    public Vector3 ZoneCenter    => _center;
-    public bool    IsShrinking   => _isShrinking;
+    public float CurrentRadius => _radius;
+    public Vector3 ZoneCenter => _center;
+    public bool IsShrinking => _isShrinking;
 
-    public bool IsInsideZone(Vector3 worldPos)
+    private bool IsInsideZone(Vector3 worldPos)
     {
         float dx = worldPos.x - _center.x;
         float dz = worldPos.z - _center.z;
@@ -31,9 +36,10 @@ public class ZoneManager : MonoBehaviour
     private float   _radius;
     private float   _elapsed;
     private bool    _isShrinking;
-    private Vector3 _center;        // current center (lerps toward _targetCenter)
-    private Vector3 _startCenter;   // center at the moment shrinking began
-    private Vector3 _targetCenter;  // boss spawn position
+    private Vector3 _center;
+    private Vector3 _startCenter;
+    private Vector3 _targetCenter;
+    private float   _damageTimer;
 
     private void Start()
     {
@@ -61,6 +67,19 @@ public class ZoneManager : MonoBehaviour
         _center  = Vector3.Lerp(_startCenter, _targetCenter, t);
 
         PushToShader();
+        TickOutOfZoneDamage();
+    }
+
+    private void TickOutOfZoneDamage()
+    {
+        if (playerHealth == null) return;
+        if (IsInsideZone(playerHealth.transform.position)) { _damageTimer = 0f; return; }
+
+        _damageTimer += Time.deltaTime;
+        if (_damageTimer < damageInterval) return;
+
+        _damageTimer = 0f;
+        playerHealth.ChangeHealth(-outOfZoneDamage);
     }
 
     public void StartShrink()
