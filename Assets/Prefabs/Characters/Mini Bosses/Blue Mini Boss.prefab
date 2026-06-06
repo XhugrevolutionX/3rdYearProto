@@ -282,6 +282,13 @@ MonoBehaviour:
   characterRenderer: {fileID: 872363447228896514}
   hitMaterial: {fileID: 2100000, guid: 756bbc06e25f2e54893ad0d5b1e1a51f, type: 2}
   hitFlashDuration: 0.1
+  xpPrefab: {fileID: 3362081325621664219, guid: 70bdb6b435a2e0a4d81257624dc95417, type: 3}
+  minDrop: 45
+  maxDrop: 60
+  minForce: 5
+  maxForce: 15
+  minUpForce: 5
+  maxUpForce: 15
 --- !u!114 &5126417146375101268
 MonoBehaviour:
   m_ObjectHideFlags: 0
