@@ -498,7 +498,6 @@ MonoBehaviour:
   xpPrefabs:
   - {fileID: 3362081325621664219, guid: 70bdb6b435a2e0a4d81257624dc95417, type: 3}
   - {fileID: 4357467251596773722, guid: 4b5d2769ff5635e4e9210263fb782625, type: 3}
-  - {fileID: 1981377092181669169, guid: e1f711f4080858e4a90a9ba7aa6221e9, type: 3}
   minDrop: 5
   maxDrop: 8
   minForce: 5

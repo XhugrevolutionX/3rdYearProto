@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: -4180000307820785217, guid: 85cfeb77101f7584ebb3a78891c8ed7a, type: 3}
+    - target: {fileID: 4294088483137381760, guid: 4585b0190bc990b469e98687e98aa85c, type: 3}
+      propertyPath: xpPrefabs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6549702727860710937, guid: 4585b0190bc990b469e98687e98aa85c, type: 3}
       propertyPath: type
       value: 6
