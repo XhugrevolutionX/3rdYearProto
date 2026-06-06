@@ -24,6 +24,8 @@ public abstract class Controller : MonoBehaviour
     public bool HasTypeDamageBonus => typeDamageBonus;
     public int AttackDamage => attackDamage;
 
+    public void AddDamage(int amount) => attackDamage += amount;
+
     protected bool canAttack = true;
 
     protected abstract void Attack();

@@ -262,7 +262,7 @@ MonoBehaviour:
   contactDamage: 15
   knockBackForce: 40
   knockBackDuration: 0.75
-  detectionRadius: 24
+  detectionRadius: 28
   playerMask:
     serializedVersion: 2
     m_Bits: 8

@@ -6,8 +6,14 @@ public class UIManager : MonoBehaviour
 {
     [Header("References")] 
     [SerializeField] private TextMeshProUGUI timerTmp;
+    
+    [Header("Boss")]
     [SerializeField] private TextMeshProUGUI bossHealthTmp;
     [SerializeField] private Slider bossHealthBarSlider;
+    
+    [Header("Level System")]
+    [SerializeField] private Slider playerLevelBarSlider;
+    [SerializeField] private TextMeshProUGUI playerLevelTmp;
     
     public static UIManager Instance { get; private set; }
     
@@ -15,6 +21,7 @@ public class UIManager : MonoBehaviour
     public Slider BossHealthBarSlider => bossHealthBarSlider;
     
     private GameManager _gameManager;
+    private int _playerLevel;
 
     private void Awake()
     {
@@ -26,6 +33,20 @@ public class UIManager : MonoBehaviour
     {
         _gameManager = GameManager.Instance;
         _gameManager.OnTimerEnd += () => bossHealthBarSlider.transform.parent.gameObject.SetActive(true);
+
+        playerLevelBarSlider.minValue = 0f;
+        playerLevelBarSlider.maxValue = 1f;
+        playerLevelBarSlider.value    = 0f;
+        playerLevelTmp.SetText("EXP 0 / LEVEL 0");
+        
+        PlayerLevelSystem playerLevelSystem = PlayerLevelSystem.Instance;
+
+        playerLevelSystem.OnLevelUp += (level, _) => _playerLevel = level;
+        playerLevelSystem.OnGainXP += (currentXP, xpToNextLevel) =>
+        {
+            playerLevelBarSlider.value = currentXP / (float)xpToNextLevel;
+            playerLevelTmp.SetText($"EXP {currentXP} / LEVEL {_playerLevel}");
+        };
     }
 
     private void Update()

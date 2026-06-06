@@ -49,8 +49,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Weapon
   controller: {fileID: 4002557608948094580}
   impactParticles: {fileID: 6563532745108147448}
-  knockBackForce: 15
-  knockBackDuration: 2
+  knockBackForce: 10
+  knockBackDuration: 0.5
   cameraShakeData:
     Amplitude: 2
     Frequency: 1
@@ -183,6 +183,7 @@ GameObject:
   - component: {fileID: 4002557608948094580}
   - component: {fileID: 2580833051618206382}
   - component: {fileID: 3867011284375230144}
+  - component: {fileID: 4819857725518613748}
   - component: {fileID: 5617554649318947200}
   - component: {fileID: 6232487642596597557}
   - component: {fileID: 4033788012362864995}
@@ -228,7 +229,7 @@ MonoBehaviour:
   typeDamageBonus: 1
   attackDamage: 1
   attackCooldown: 0.15
-  raycastDistance: 1.5
+  raycastDistance: 3
   areaMask:
     serializedVersion: 2
     m_Bits: 64
@@ -274,6 +275,21 @@ MonoBehaviour:
     Amplitude: 2
     Frequency: 1
     Duration: 0.2
+--- !u!114 &4819857725518613748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2833167095438190592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea75881cfddbff848a186d3ddf7e4a0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerLevelSystem
+  _startXpToNextLevel: 100
+  _xpMultiplier: 1.2
+  _damagePerLevel: 1
 --- !u!114 &5617554649318947200
 MonoBehaviour:
   m_ObjectHideFlags: 0
