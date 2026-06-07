@@ -1,3 +1,4 @@
+
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.AI.Navigation;
@@ -41,7 +42,7 @@ public class GridGenerator : MonoBehaviour
     [SerializeField] private HexBiomeType[] hexBiomeTypes = {};
     [SerializeField] private int            hexRadius = 5;
     [SerializeField] private float          tileScale = 1.5f;
-    
+
     [Header("Material Colors")]
     [SerializeField] private Material redMaterial;
     [SerializeField] private Material greenMaterial;
@@ -50,7 +51,7 @@ public class GridGenerator : MonoBehaviour
     [SerializeField] private Material orangeMaterial;
     [SerializeField] private Material purpleMaterial;
 
-    [Header("Mini Bosses")] 
+    [Header("Mini Bosses")]
     [SerializeField] private EnemyController redMiniBoss;
     [SerializeField] private EnemyController greenMiniBoss;
     [SerializeField] private EnemyController blueMiniBoss;
@@ -98,6 +99,11 @@ public class GridGenerator : MonoBehaviour
     // ── Shared ───────────────────────────────────────────────────────────────
     [SerializeField] private Color[] palette = { Color.white };
 
+    // ── Save data ─────────────────────────────────────────────────────────────
+    [Header("Save Data")]
+    [Tooltip("ScriptableObject that persists the generation seed so play mode recreates the exact same grid.")]
+    [SerializeField] private GridSaveData _gridSaveData;
+
     // ── Runtime state ────────────────────────────────────────────────────────
     private readonly Dictionary<Hex, GameObject> _hexCells     = new();
     private readonly Dictionary<Hex, int>        _hexTileTypes = new(); // biome type index per cell
@@ -127,13 +133,9 @@ public class GridGenerator : MonoBehaviour
     /// </summary>
     public List<Transform> BiomeSpawnPoints { get; private set; } = new();
 
-    /// <summary>Spawn-point Transform at the center of the neutral boss arena. Null when no neutral biome is set.</summary>
-    [SerializeField] private Transform _neutralZoneSpawnPoint;
-    public Transform NeutralZoneSpawnPoint
-    {
-        get => _neutralZoneSpawnPoint;
-        private set => _neutralZoneSpawnPoint = value;
-    }
+    // Not serialized — always regenerated; storing a reference to a dynamic object in the scene caused corruption.
+    private Transform _neutralZoneSpawnPoint;
+    public Transform NeutralZoneSpawnPoint => _neutralZoneSpawnPoint;
 
     /// <summary>World positions of every passable, non-neutral-zone hex. Populated after each <see cref="GenerateGrid"/> call.</summary>
     public List<Vector3> PassableHexPositions { get; private set; } = new();
@@ -144,11 +146,44 @@ public class GridGenerator : MonoBehaviour
     /// <summary>Mini boss spawn points keyed by biome color for direct lookup.</summary>
     public Dictionary<TypeColor, Transform> MiniBossSpawnPointsByBiome { get; private set; } = new();
 
-    //void Start() => GenerateGrid();
+    // ── Lifecycle ─────────────────────────────────────────────────────────────
 
+    private void Start()
+    {
+        if (_gridSaveData == null || !_gridSaveData.hasData)
+        {
+            Debug.LogWarning("GridGenerator: no saved seed found — generating a random grid. Assign a GridSaveData asset and click Generate in the editor to lock in a layout.");
+            GenerateGrid();
+            return;
+        }
+        RunGeneration(_gridSaveData.seed);
+    }
+
+    // ── Public API ────────────────────────────────────────────────────────────
+
+    /// <summary>
+    /// Generates a fresh grid with a new random seed, saves the seed to the GridSaveData
+    /// asset, and rebuilds the NavMesh. Call this from the editor button.
+    /// In play mode the same layout is reproduced via Start() using the saved seed.
+    /// </summary>
     public void GenerateGrid()
     {
+        int seed = Random.Range(int.MinValue, int.MaxValue);
+        if (_gridSaveData != null)
+        {
+            _gridSaveData.seed    = seed;
+            _gridSaveData.hasData = true;
+        }
+        RunGeneration(seed);
+    }
+
+    // ── Internal generation ───────────────────────────────────────────────────
+
+    private void RunGeneration(int seed)
+    {
         ClearGrid();
+        Random.InitState(seed);
+
         switch (gridType)
         {
             case GridType.Hex:     GenerateHex();     break;
@@ -346,6 +381,9 @@ public class GridGenerator : MonoBehaviour
         cell = Instantiate(hexPrefab, pos, rot, transform);
         cell.name = cellName;
         cell.transform.localScale = hexPrefab.transform.localScale * tileScale;
+#if UNITY_EDITOR
+        cell.hideFlags = HideFlags.DontSaveInEditor;
+#endif
 
         var biome = ResolveBiome(biomeIndex);
 
@@ -457,6 +495,9 @@ public class GridGenerator : MonoBehaviour
         var spawnRoot = new GameObject("BiomeSpawnPoints");
         spawnRoot.transform.SetParent(transform);
         spawnRoot.transform.localPosition = Vector3.zero;
+#if UNITY_EDITOR
+        spawnRoot.hideFlags = HideFlags.DontSaveInEditor;
+#endif
 
         for (int typeIndex = 0; typeIndex < hexBiomeTypes.Length; typeIndex++)
         {
@@ -513,7 +554,7 @@ public class GridGenerator : MonoBehaviour
 
     private void PlaceNeutralZoneSpawnPoint()
     {
-        NeutralZoneSpawnPoint = null;
+        _neutralZoneSpawnPoint = null;
         if (neutralBiome == null) return;
 
         var pos = HexLayout.HexToWorld(NeutralZoneCenter, _hexCellSize);
@@ -531,7 +572,10 @@ public class GridGenerator : MonoBehaviour
             go.transform.position = pos;
         }
         go.name = "SpawnPoint_NeutralZone";
-        NeutralZoneSpawnPoint = go.transform;
+#if UNITY_EDITOR
+        go.hideFlags = HideFlags.DontSaveInEditor;
+#endif
+        _neutralZoneSpawnPoint = go.transform;
     }
 
     // ── Accessors ─────────────────────────────────────────────────────────────
@@ -622,7 +666,7 @@ public class GridGenerator : MonoBehaviour
         _octagonCells.Clear();
         BiomeGroups.Clear();
         BiomeSpawnPoints.Clear();
-        NeutralZoneSpawnPoint = null;
+        _neutralZoneSpawnPoint = null;
         PassableHexPositions.Clear();
         PassableHexPositionsByBiome.Clear();
         MiniBossSpawnPointsByBiome.Clear();
@@ -632,6 +676,9 @@ public class GridGenerator : MonoBehaviour
     {
         cell = Instantiate(prefab, pos, rot, transform);
         cell.name = cellName;
+#if UNITY_EDITOR
+        cell.hideFlags = HideFlags.DontSaveInEditor;
+#endif
         ApplyRandomColor(cell);
     }
 

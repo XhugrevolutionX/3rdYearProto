@@ -104,3 +104,7 @@ InitTestScene*.unity*
 
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
+
+# NavMesh baked data — regenerated at runtime, must not be committed
+/[Aa]ssets/[Ss]cenes/**/NavMesh-*.asset
+/[Aa]ssets/[Ss]cenes/**/NavMesh-*.asset.meta

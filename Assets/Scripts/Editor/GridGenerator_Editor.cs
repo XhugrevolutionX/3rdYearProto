@@ -43,7 +43,34 @@ public class GridGenerator_Editor : Editor
 
         serializedObject.ApplyModifiedProperties();
 
-        EditorGUILayout.Space(20);
+        // ── Save Data ────────────────────────────────────────────────────────
+        EditorGUILayout.Space(10);
+        EditorGUILayout.LabelField("Save Data", EditorStyles.boldLabel);
+
+        var saveDataProp = serializedObject.FindProperty("_gridSaveData");
+        EditorGUILayout.PropertyField(saveDataProp, new GUIContent("Grid Save Data",
+            "ScriptableObject that stores the random seed. " +
+            "Create one via Assets → Create → Grid → Save Data, then assign it here."));
+        serializedObject.ApplyModifiedProperties();
+
+        var saveData = saveDataProp.objectReferenceValue as GridSaveData;
+        if (saveData == null)
+        {
+            EditorGUILayout.HelpBox(
+                "No GridSaveData asset assigned. Create one via\nAssets → Create → Grid → Save Data\nand assign it here so the seed persists into play mode.",
+                MessageType.Warning);
+        }
+        else if (saveData.hasData)
+        {
+            EditorGUILayout.HelpBox($"Saved seed: {saveData.seed}", MessageType.None);
+        }
+        else
+        {
+            EditorGUILayout.HelpBox("No seed saved yet — click Generate to create one.", MessageType.Info);
+        }
+
+        // ── Buttons ──────────────────────────────────────────────────────────
+        EditorGUILayout.Space(10);
 
         var grid = (GridGenerator)target;
 
@@ -51,6 +78,13 @@ public class GridGenerator_Editor : Editor
         {
             grid.GenerateGrid();
             EditorUtility.SetDirty(grid);
+
+            // Persist the newly written seed to the ScriptableObject asset on disk.
+            if (saveData != null)
+            {
+                EditorUtility.SetDirty(saveData);
+                AssetDatabase.SaveAssetIfDirty(saveData);
+            }
         }
 
         if (GUILayout.Button("Clear"))
