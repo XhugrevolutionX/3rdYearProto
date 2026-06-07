@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6463700616959432008}
   - component: {fileID: 440855096550015106}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: MagnetHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 638907398866822466}
   - component: {fileID: 1981377092181669169}
   - component: {fileID: 6303160538137548229}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: 10 XP
   m_TagString: Untagged
   m_Icon: {fileID: 0}

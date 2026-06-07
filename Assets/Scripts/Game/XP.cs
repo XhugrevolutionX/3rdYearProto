@@ -24,13 +24,10 @@ public class XP : MonoBehaviour
     {
         if (other.CompareTag("Player"))
             _target = other.transform;
-    }
-
-    private void OnCollisionEnter(Collision other)
-    {
-        if (!other.gameObject.CompareTag("Player")) return;
-
-        PlayerLevelSystem.Instance.GainXP(amount);
-        Destroy(gameObject);
+        else if(other.CompareTag("PlayerCurrency"))
+        {
+            PlayerLevelSystem.Instance.GainXP(amount);
+            Destroy(gameObject);
+        }
     }
 }
