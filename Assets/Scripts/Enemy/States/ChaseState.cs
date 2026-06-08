@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class ChaseState : AIState
 {
     public ChaseState(EnemyController ai, AIStateMachine stateMachine) : base(ai, stateMachine) { }
@@ -7,6 +9,13 @@ public class ChaseState : AIState
         if (!_ai.PlayerTransform)
         {
             _stateMachine.ChangeState(new IdleState(_ai, _stateMachine));
+            return;
+        }
+
+        float dist = Vector3.Distance(_ai.transform.position, _ai.PlayerTransform.position);
+        if (dist <= _ai.AttackRange && _ai.CanAttack)
+        {
+            _stateMachine.ChangeState(new AttackState(_ai, _stateMachine));
             return;
         }
 
