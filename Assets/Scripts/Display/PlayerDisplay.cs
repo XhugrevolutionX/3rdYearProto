@@ -4,8 +4,9 @@ public class PlayerDisplay : TypeDisplay
 {
     [Header("Player References")] 
     [SerializeField] private ParticleSystem[] particles;
-    
-    [Header("Player Parameters")]
+
+    [Header("Player Parameters")] 
+    [SerializeField] private Gradient whiteGradient;
     [SerializeField] private Gradient redGradient;
     [SerializeField] private Gradient greenGradient;
     [SerializeField] private Gradient blueGradient;
@@ -25,7 +26,7 @@ public class PlayerDisplay : TypeDisplay
             TypeColor.YELLOW => yellowGradient,
             TypeColor.ORANGE => orangeGradient,
             TypeColor.PURPLE => purpleGradient,
-            _                => null
+            _                => whiteGradient
         };
 
         if (gradient == null) return;
@@ -33,7 +34,7 @@ public class PlayerDisplay : TypeDisplay
         foreach (var particle in particles)
         {
             var col = particle.colorOverLifetime;
-            col.enabled = true;
+            if (!col.enabled) continue;
             col.color = new ParticleSystem.MinMaxGradient(gradient);
         }
     }
