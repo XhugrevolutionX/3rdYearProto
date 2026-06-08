@@ -66,6 +66,6 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         OnGameOver?.Invoke();
-        Time.timeScale = 0;
+        TimeManager.Instance?.Pause();
     }
 }

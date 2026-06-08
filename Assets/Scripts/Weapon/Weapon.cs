@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
@@ -45,13 +44,6 @@ public class Weapon : MonoBehaviour
         impactParticles.transform.position = other.transform.position;
         impactParticles.Play();
         CameraShakeManager.Instance?.Shake(cameraShakeData);
-        StartCoroutine(HitStop());
-    }
-
-    private IEnumerator HitStop()
-    {
-        Time.timeScale = hitStopTimeScale;
-        yield return new WaitForSecondsRealtime(hitStopDuration);
-        Time.timeScale = 1f;
+        TimeManager.Instance?.DoHitStop(hitStopDuration, hitStopTimeScale);
     }
 }

@@ -10,6 +10,12 @@ public class AttackState : AIState
 
     public override void Update()
     {
+        if (_ai.Movement.IsKnockedBack)
+        {
+            _stateMachine.ChangeState(new ChaseState(_ai, _stateMachine));
+            return;
+        }
+
         if (!_ai.CanAttack) return;
 
         _stateMachine.ChangeState(_ai.PlayerTransform

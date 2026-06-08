@@ -13,7 +13,7 @@ public class ChaseState : AIState
         }
 
         float dist = Vector3.Distance(_ai.transform.position, _ai.PlayerTransform.position);
-        if (dist <= _ai.AttackRange && _ai.CanAttack)
+        if (dist <= _ai.AttackRange && _ai.CanAttack && !_ai.Movement.IsKnockedBack)
         {
             _stateMachine.ChangeState(new AttackState(_ai, _stateMachine));
             return;

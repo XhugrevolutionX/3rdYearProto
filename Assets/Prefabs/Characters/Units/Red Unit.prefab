@@ -72,6 +72,10 @@ PrefabInstance:
       propertyPath: attackRange
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: 6549702727860710937, guid: 4585b0190bc990b469e98687e98aa85c, type: 3}
+      propertyPath: contactDamage
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7923530282015817014, guid: 4585b0190bc990b469e98687e98aa85c, type: 3}
       propertyPath: InitialModule.startColor.maxColor.g
       value: 0.009441373
