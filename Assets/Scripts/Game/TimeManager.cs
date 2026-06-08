@@ -1,5 +1,13 @@
+using System;
 using System.Collections;
 using UnityEngine;
+
+[Serializable]
+public struct HitStopData
+{
+    public float Duration;
+    public float TimeScale;
+}
 
 public class TimeManager : MonoBehaviour
 {
@@ -21,21 +29,21 @@ public class TimeManager : MonoBehaviour
         Time.timeScale = 0f;
     }
 
-    public void DoHitStop(float duration, float timeScale = 0f)
+    public void DoHitStop(HitStopData data)
     {
-        float endTime = Time.unscaledTime + duration;
+        float endTime = Time.unscaledTime + data.Duration;
         if (endTime <= _hitStopEndTime) return;
 
         _hitStopEndTime = endTime;
 
         if (_hitStopCoroutine != null) StopCoroutine(_hitStopCoroutine);
-        _hitStopCoroutine = StartCoroutine(HitStopRoutine(duration, timeScale));
+        _hitStopCoroutine = StartCoroutine(HitStopRoutine(data));
     }
 
-    private IEnumerator HitStopRoutine(float duration, float timeScale)
+    private IEnumerator HitStopRoutine(HitStopData data)
     {
-        Time.timeScale = timeScale;
-        yield return new WaitForSecondsRealtime(duration);
+        Time.timeScale = data.TimeScale;
+        yield return new WaitForSecondsRealtime(data.Duration);
         Time.timeScale = 1f;
         _hitStopCoroutine = null;
     }

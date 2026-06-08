@@ -14,8 +14,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] private CameraShakeData cameraShakeData;
 
     [Header("Hit Stop")]
-    [SerializeField] private float hitStopDuration = 0.08f;
-    [SerializeField] private float hitStopTimeScale = 0.05f;
+    [SerializeField] private HitStopData hitStopData;
 
     [Header("Attack KnockBack (self)")]
     [SerializeField] private KnockBackData attackKnockBackData;
@@ -44,6 +43,6 @@ public class Weapon : MonoBehaviour
         impactParticles.transform.position = other.transform.position;
         impactParticles.Play();
         CameraShakeManager.Instance?.Shake(cameraShakeData);
-        TimeManager.Instance?.DoHitStop(hitStopDuration, hitStopTimeScale);
+        TimeManager.Instance?.DoHitStop(hitStopData);
     }
 }
