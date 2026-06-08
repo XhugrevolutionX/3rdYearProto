@@ -4,7 +4,7 @@ public class Area : MonoBehaviour
 {
     [Header("Parameters")]
     [SerializeField] private TypeColor type;
-    [SerializeField] private Renderer renderer;
+    [SerializeField] private Renderer areaRenderer;
     [SerializeField] private Texture2D whiteTexture;
     
     public TypeColor Type
@@ -16,6 +16,6 @@ public class Area : MonoBehaviour
     public void RemoveColor()
     {
         type = TypeColor.WHITE;
-        renderer.material.SetTexture("_Texture2D", whiteTexture);
+        areaRenderer.material.SetTexture("_Texture2D", whiteTexture);
     }
 }

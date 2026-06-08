@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Area
   type: 0
-  renderer: {fileID: 7611804477314571399}
+  areaRenderer: {fileID: 7611804477314571399}
   whiteTexture: {fileID: 2800000, guid: caab67d9e93c56d42a08c4213b40061a, type: 3}
 --- !u!33 &7955788126616039054
 MeshFilter:

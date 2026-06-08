@@ -12,11 +12,13 @@ public class EnemyController : Controller
     [Header("Detection")]
     [SerializeField] private float detectionRadius = 10f;
     [SerializeField] private float attackRange = 2f;
+    [SerializeField] private float attackOrientationLockDuration = 0.3f;
     [SerializeField] private LayerMask playerMask;
 
     public EnemyMovement Movement { get; private set; }
     public Transform PlayerTransform { get; private set; }
     public float AttackRange => attackRange;
+    public float AttackOrientationLockDuration => attackOrientationLockDuration;
     public bool CanAttack => canAttack;
 
     public void PerformAttack()

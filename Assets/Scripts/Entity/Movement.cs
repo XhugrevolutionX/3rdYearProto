@@ -12,10 +12,12 @@ public class Movement : MonoBehaviour
     [SerializeField] private float knockBackResistance = 5f;
     
     public bool IsKnockedBack => _isKnockedBack;
+    public bool IsRotationLocked => _isRotationLocked;
 
     protected Rigidbody _rb;
     protected Vector2 _direction;
     private bool _isKnockedBack;
+    private bool _isRotationLocked;
 
     protected virtual void Awake() => _rb = GetComponent<Rigidbody>();
 
@@ -53,9 +55,33 @@ public class Movement : MonoBehaviour
 
     private void Move() => _rb.linearVelocity = new Vector3(_direction.x * speed, _rb.linearVelocity.y, _direction.y * speed);
 
+    public void LockRotation(float duration)
+    {
+        if (_lockRotationCoroutine != null) StopCoroutine(_lockRotationCoroutine);
+        _lockRotationCoroutine = StartCoroutine(LockRotationRoutine(duration));
+    }
+
+    private Coroutine _lockRotationCoroutine;
+
+    private IEnumerator LockRotationRoutine(float duration)
+    {
+        _isRotationLocked = true;
+        yield return new WaitForSeconds(duration);
+        _isRotationLocked = false;
+    }
+
+    public void RotateToward(Vector3 target)
+    {
+        Vector3 dir = (target - transform.position);
+        dir.y = 0f;
+        if (dir.sqrMagnitude < 0.01f) return;
+        Quaternion targetRotation = Quaternion.LookRotation(dir.normalized);
+        viewTransform.rotation = Quaternion.Slerp(viewTransform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+    }
+
     protected virtual void RotateView()
     {
-        if (_direction.sqrMagnitude < 0.01f) return;
+        if (_isRotationLocked || _direction.sqrMagnitude < 0.01f) return;
 
         Vector3 moveDir = new Vector3(_direction.x, 0f, _direction.y);
         Quaternion targetRotation = Quaternion.LookRotation(moveDir);
