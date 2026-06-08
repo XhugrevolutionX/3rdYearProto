@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7618225995550953459}
+  - component: {fileID: 1625489948606396728}
   - component: {fileID: 7955788126616039054}
   - component: {fileID: 7611804477314571399}
-  - component: {fileID: 1625489948606396728}
   m_Layer: 6
   m_Name: Tile
   m_TagString: Untagged
@@ -35,6 +35,21 @@ Transform:
   - {fileID: 3895563227428770434}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -90, y: 90, z: 0}
+--- !u!114 &1625489948606396728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 291677264823543040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bab78611b9c4864c9006a48eab2084f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Area
+  type: 0
+  renderer: {fileID: 7611804477314571399}
+  whiteTexture: {fileID: 2800000, guid: caab67d9e93c56d42a08c4213b40061a, type: 3}
 --- !u!33 &7955788126616039054
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -92,19 +107,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1625489948606396728
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 291677264823543040}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bab78611b9c4864c9006a48eab2084f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Area
-  type: 3
 --- !u!1 &4507428427377585366
 GameObject:
   m_ObjectHideFlags: 0

@@ -33,6 +33,11 @@ public class GameManager : MonoBehaviour
         else Instance = this;
     }
 
+    private void OnEnable()  => MiniBossHealth.OnMiniBossDeath += OnMiniBossDeath;
+    private void OnDisable() => MiniBossHealth.OnMiniBossDeath -= OnMiniBossDeath;
+
+    private void OnMiniBossDeath(TypeColor color) => gridGenerator.RemoveColorFromAreas(color);
+
     private void Start() => Time.timeScale = 1f;
 
     private void Update()

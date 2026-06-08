@@ -38,7 +38,7 @@ public class GridGenerator : MonoBehaviour
     // One shared prefab is instantiated for every cell.
     // Biomes are seeded with Voronoi; each biome owns its own mesh variants.
 
-    [SerializeField] private GameObject     hexPrefab;
+    [SerializeField] private Area     hexPrefab;
     [SerializeField] private HexBiomeType[] hexBiomeTypes = {};
     [SerializeField] private int            hexRadius = 5;
     [SerializeField] private float          tileScale = 1.5f;
@@ -105,7 +105,7 @@ public class GridGenerator : MonoBehaviour
     [SerializeField] private GridSaveData _gridSaveData;
 
     // ── Runtime state ────────────────────────────────────────────────────────
-    private readonly Dictionary<Hex, GameObject> _hexCells     = new();
+    private readonly Dictionary<Hex, Area> _hexCells     = new();
     private readonly Dictionary<Hex, int>        _hexTileTypes = new(); // biome type index per cell
     private readonly Dictionary<Hex, bool>       _hexBlocking  = new(); // true = blocks movement
     private readonly HashSet<Hex>                _neutralZone  = new();
@@ -376,7 +376,7 @@ public class GridGenerator : MonoBehaviour
     }
 
     private void SpawnHex(Vector3 pos, Quaternion rot, string cellName, int biomeIndex,
-                          out GameObject cell, out bool blocking)
+                          out Area cell, out bool blocking)
     {
         cell = Instantiate(hexPrefab, pos, rot, transform);
         cell.name = cellName;
@@ -592,9 +592,9 @@ public class GridGenerator : MonoBehaviour
         _hexBlocking.TryGetValue(hex, out bool b) && b;
 
     /// <summary>Returns all neighbour GameObjects that share the same biome type as <paramref name="hex"/>.</summary>
-    public List<GameObject> GetSameTypeNeighbours(Hex hex)
+    public List<Area> GetSameTypeNeighbours(Hex hex)
     {
-        var result = new List<GameObject>();
+        var result = new List<Area>();
         if (!_hexTileTypes.TryGetValue(hex, out int type)) return result;
 
         foreach (var n in hex.Neighbours())
@@ -724,7 +724,14 @@ public class GridGenerator : MonoBehaviour
 
     // ── Cell accessors ────────────────────────────────────────────────────────
 
-    public GameObject GetHexCell(Hex hex) =>
+    public void RemoveColorFromAreas(TypeColor color)
+    {
+        foreach (var area in _hexCells.Values)
+            if (area != null && area.Type == color)
+                area.RemoveColor();
+    }
+
+    public Area GetHexCell(Hex hex) =>
         _hexCells.TryGetValue(hex, out var c) ? c : null;
 
     public GameObject GetSquareCell(Vector2Int coord) =>
