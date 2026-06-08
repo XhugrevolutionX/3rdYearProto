@@ -31,11 +31,14 @@ public class Projectile : MonoBehaviour
             knockBackData
         );
 
-        if (!hit || _movement == null) return;
+        if (hit && _movement)
+        {
+
+            CameraShakeManager.Instance?.Shake(cameraShakeData);
+            TimeManager.Instance?.DoHitStop(hitStopData);
+        }
         
-        impactParticles.transform.position = other.transform.position;
-        impactParticles.Play();
-        CameraShakeManager.Instance?.Shake(cameraShakeData);
-        TimeManager.Instance?.DoHitStop(hitStopData);
+        Instantiate(impactParticles, transform.position, Quaternion.identity);
+        Destroy(gameObject);
     }
 }

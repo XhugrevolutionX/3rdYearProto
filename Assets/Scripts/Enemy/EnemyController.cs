@@ -28,17 +28,18 @@ public class EnemyController : Controller
     }
 
     private Display _display;
-    private AIStateMachine _stateMachine;
+    protected AIStateMachine _stateMachine;
 
     protected virtual void Start()
     {
         Movement = GetComponent<EnemyMovement>();
-        
         _display = GetComponent<Display>();
-        
+
         _stateMachine = new AIStateMachine();
-        _stateMachine.Init(new IdleState(this, _stateMachine));
+        InitStateMachine();
     }
+
+    protected virtual void InitStateMachine() => _stateMachine.Init(new IdleState(this, _stateMachine));
 
     private void Update()
     {
@@ -57,7 +58,7 @@ public class EnemyController : Controller
         PlayerTransform = hits.Length > 0 ? hits[0].transform : null;
     }
 
-    private void OnDrawGizmosSelected()
+    protected virtual void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);

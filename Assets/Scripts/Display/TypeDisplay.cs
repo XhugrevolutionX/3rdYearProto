@@ -14,7 +14,7 @@ public class TypeDisplay : Display
     [SerializeField] private Color orangeColor = new(1f, 0.5f, 0f);
     [SerializeField] private Color purpleColor = new(0.5f, 0f, 0.5f);
 
-    public void SetType(TypeColor type)
+    public virtual void SetType(TypeColor type)
     {
         Color color = type switch
         {

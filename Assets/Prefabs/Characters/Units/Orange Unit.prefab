@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6741950126971127308}
   m_Layer: 7
-  m_Name: ShootPoint
+  m_Name: ProjectileSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -468,8 +468,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -1825092448816306423, guid: 28f62f5591e5d3a4b952f2fe66b35fa1, type: 3}
     - target: {fileID: 4294088483137381760, guid: 4585b0190bc990b469e98687e98aa85c, type: 3}
+      propertyPath: maxHealth
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4294088483137381760, guid: 4585b0190bc990b469e98687e98aa85c, type: 3}
       propertyPath: xpPrefabs.Array.size
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5126417146375101268, guid: 4585b0190bc990b469e98687e98aa85c, type: 3}
+      propertyPath: speed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5126417146375101268, guid: 4585b0190bc990b469e98687e98aa85c, type: 3}
+      propertyPath: knockBackResistance
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6510807833111902558, guid: 4585b0190bc990b469e98687e98aa85c, type: 3}
       propertyPath: InitialModule.startColor.maxColor.g
@@ -504,6 +516,7 @@ PrefabInstance:
     - {fileID: 4083294272735413899, guid: 4585b0190bc990b469e98687e98aa85c, type: 3}
     - {fileID: 3555562013570196414, guid: 4585b0190bc990b469e98687e98aa85c, type: 3}
     - {fileID: 6852634972732481206, guid: 4585b0190bc990b469e98687e98aa85c, type: 3}
+    - {fileID: 6549702727860710937, guid: 4585b0190bc990b469e98687e98aa85c, type: 3}
     m_RemovedGameObjects:
     - {fileID: 7305553932953018235, guid: 4585b0190bc990b469e98687e98aa85c, type: 3}
     m_AddedGameObjects:
@@ -522,13 +535,51 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7695227823746862568, guid: 4585b0190bc990b469e98687e98aa85c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4562818530741152567}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8739953015054851595, guid: 4585b0190bc990b469e98687e98aa85c, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 1823078199454191173}
   m_SourcePrefab: {fileID: 100100000, guid: 4585b0190bc990b469e98687e98aa85c, type: 3}
 --- !u!4 &1115475611868966880 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7695227823746862568, guid: 4585b0190bc990b469e98687e98aa85c, type: 3}
   m_PrefabInstance: {fileID: 7327365149125108232}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2088134424286673923 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8739953015054851595, guid: 4585b0190bc990b469e98687e98aa85c, type: 3}
+  m_PrefabInstance: {fileID: 7327365149125108232}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1823078199454191173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088134424286673923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd4cac7a4e2a09044a117035dc3a72a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RangedEnemyController
+  type: 5
+  typeDamageBonus: 0
+  attackDamage: 3
+  attackCooldown: 1.5
+  contactDamage: 2
+  knockBackForce: 10
+  knockBackDuration: 0.5
+  detectionRadius: 15
+  attackRange: 8
+  attackOrientationLockDuration: 0.3
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 8
+  projectilePrefab: {fileID: 820970004036175380, guid: e4fd7d0a79cec0c4591b9ad76c7b399f, type: 3}
+  projectileSpawnPoint: {fileID: 6741950126971127308}
+  projectileSpeed: 15
+  minDistance: 5
+  facingThreshold: 0.9
 --- !u!4 &4324007197144200087 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6463213456214380959, guid: 4585b0190bc990b469e98687e98aa85c, type: 3}

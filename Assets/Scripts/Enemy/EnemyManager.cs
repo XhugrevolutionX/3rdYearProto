@@ -33,8 +33,7 @@ public class EnemyManager : MonoBehaviour
         var enemy  = Instantiate(prefab, pos, Quaternion.identity, transform);
 
         var health = enemy.GetComponentInChildren<EnemyHealth>();
-        if (health != null)
-            health.OnDeath += () => { _enemies.Remove(enemy); SpawnOne(); };
+        if (health) health.OnDeath += () => { _enemies.Remove(enemy); SpawnOne(); };
 
         _enemies.Add(enemy);
     }

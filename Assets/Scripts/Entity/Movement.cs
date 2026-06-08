@@ -13,6 +13,7 @@ public class Movement : MonoBehaviour
     
     public bool IsKnockedBack => _isKnockedBack;
     public bool IsRotationLocked => _isRotationLocked;
+    public Vector3 Forward => viewTransform ? viewTransform.forward : transform.forward;
 
     protected Rigidbody _rb;
     protected Vector2 _direction;

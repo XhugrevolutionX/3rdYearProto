@@ -52,11 +52,12 @@ MonoBehaviour:
   knockBackForce: 15
   knockBackDuration: 0.5
   cameraShakeData:
-    Amplitude: 0
-    Frequency: 0
-    Duration: 0
-  hitStopDuration: 0.08
-  hitStopTimeScale: 0.05
+    Amplitude: 2
+    Frequency: 1
+    Duration: 0.2
+  hitStopData:
+    Duration: 0.08
+    TimeScale: 0.05
   attackKnockBackData:
     Force: 0
     Duration: 0
@@ -597,6 +598,7 @@ MonoBehaviour:
   knockBackDuration: 0.5
   detectionRadius: 20
   attackRange: 2.5
+  attackOrientationLockDuration: 0.3
   playerMask:
     serializedVersion: 2
     m_Bits: 8
