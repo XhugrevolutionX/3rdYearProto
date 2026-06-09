@@ -407,6 +407,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 316924ca7aeea7948aa4774bbd2f83ec, type: 2}
+    - target: {fileID: 826221582693189389, guid: 4585b0190bc990b469e98687e98aa85c, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 316924ca7aeea7948aa4774bbd2f83ec, type: 2}
     - target: {fileID: 861224278249546983, guid: 4585b0190bc990b469e98687e98aa85c, type: 3}
       propertyPath: InitialModule.startColor.maxColor.g
       value: 0.53224653
@@ -575,6 +579,7 @@ MonoBehaviour:
   playerMask:
     serializedVersion: 2
     m_Bits: 8
+  attackIgnoresKnockback: 0
   projectilePrefab: {fileID: 820970004036175380, guid: e4fd7d0a79cec0c4591b9ad76c7b399f, type: 3}
   projectileSpawnPoint: {fileID: 6741950126971127308}
   projectileSpeed: 15

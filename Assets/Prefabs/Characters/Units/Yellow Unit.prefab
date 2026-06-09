@@ -359,8 +359,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6463213456214380959}
-  - component: {fileID: 3928530576121429464}
-  - component: {fileID: 729376424756618935}
   m_Layer: 7
   m_Name: Render
   m_TagString: Untagged
@@ -385,42 +383,6 @@ Transform:
   - {fileID: 7782541544017531618}
   m_Father: {fileID: 3011529788130516782}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3928530576121429464
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7592853804825786739}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98fd4795acffd4d41837b21f3d591304, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::VFX
-  particle:
-  - {fileID: 861224278249546983}
---- !u!95 &729376424756618935
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7592853804825786739}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b8a32bbb78cb3d84598a6da518dde14e, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7824172247153903616
 GameObject:
   m_ObjectHideFlags: 0
@@ -550,6 +512,8 @@ GameObject:
   - component: {fileID: 5126417146375101268}
   - component: {fileID: 4684961557870353174}
   - component: {fileID: 3400920811159068182}
+  - component: {fileID: 1693886874188428854}
+  - component: {fileID: 826221582693189389}
   - component: {fileID: 2846772371690331436}
   - component: {fileID: 7823718191155799993}
   m_Layer: 7
@@ -602,6 +566,7 @@ MonoBehaviour:
   playerMask:
     serializedVersion: 2
     m_Bits: 8
+  attackIgnoresKnockback: 0
 --- !u!114 &4294088483137381760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -643,6 +608,9 @@ MonoBehaviour:
   speed: 4
   rotationSpeed: 3
   knockBackResistance: 5
+  dash:
+    Force: 20
+    Duration: 0.2
 --- !u!114 &4684961557870353174
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -671,6 +639,42 @@ MonoBehaviour:
   healthBarSlider: {fileID: 1138190098540525997}
   healthTmp: {fileID: 0}
   healthBarLerpSpeed: 0.1
+--- !u!114 &1693886874188428854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8739953015054851595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98fd4795acffd4d41837b21f3d591304, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VFX
+  particle:
+  - {fileID: 861224278249546983}
+--- !u!95 &826221582693189389
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8739953015054851595}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b8a32bbb78cb3d84598a6da518dde14e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!195 &2846772371690331436
 NavMeshAgent:
   m_ObjectHideFlags: 0
