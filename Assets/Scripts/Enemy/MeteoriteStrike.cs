@@ -4,7 +4,7 @@ using UnityEngine.Rendering.Universal;
 public class MeteoriteStrike : MonoBehaviour
 {
     [Header("Meteorite")]
-    [SerializeField] private GameObject meteoritePrefab;
+    [SerializeField] private Meteorite meteoritePrefab;
     [SerializeField] private float fallDuration = 3f;
     [SerializeField] private float spawnHeight = 20f;
 
@@ -16,8 +16,16 @@ public class MeteoriteStrike : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private DecalProjector decalProjector;
+    
+    [Header("Colors")]
+    [SerializeField] private Material redMaterial;
+    [SerializeField] private Material greenMaterial;
+    [SerializeField] private Material blueMaterial;
+    [SerializeField] private Material yellowMaterial;
+    [SerializeField] private Material orangeMaterial;
+    [SerializeField] private Material purpleMaterial;
 
-    private GameObject _meteorite;
+    private Meteorite _meteorite;
     private Vector3 _start;
     private Vector3 _end;
     private float _elapsed;
@@ -34,6 +42,8 @@ public class MeteoriteStrike : MonoBehaviour
 
         _start = groundPosition + Vector3.up * spawnHeight;
         _meteorite = Instantiate(meteoritePrefab, _start, Quaternion.identity);
+
+        _meteorite.MeteoriteRenderer.material = TypeToMaterial(type);
 
         _targetColor = TypeToColor(type);
         _decalMaterial = new Material(decalProjector.material);
@@ -61,7 +71,7 @@ public class MeteoriteStrike : MonoBehaviour
         foreach (var col in Physics.OverlapSphere(_end, impactRadius, playerLayer))
             CombatUtils.ApplyHit<Health>(col.gameObject, _attacker, damage, knockBackData);
 
-        Destroy(_meteorite);
+        Destroy(_meteorite.gameObject);
         Destroy(gameObject);
     }
 
@@ -72,6 +82,17 @@ public class MeteoriteStrike : MonoBehaviour
         Gizmos.color = new Color(1f, 0.3f, 0f, 1f);
         Gizmos.DrawWireSphere(transform.position, impactRadius);
     }
+
+    private Material TypeToMaterial(TypeColor type) => type switch
+    {
+        TypeColor.RED    => redMaterial,
+        TypeColor.GREEN  => greenMaterial,
+        TypeColor.BLUE   => blueMaterial,
+        TypeColor.YELLOW => yellowMaterial,
+        TypeColor.ORANGE => orangeMaterial,
+        TypeColor.PURPLE => purpleMaterial,
+        _                => redMaterial
+    };
 
     private static Color TypeToColor(TypeColor type) => type switch
     {

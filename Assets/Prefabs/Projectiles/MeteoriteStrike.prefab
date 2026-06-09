@@ -105,11 +105,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67bf9bf770a660f469b6e8576857da3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeteoriteStrike
-  meteoritePrefab: {fileID: 7222989832790573181, guid: 9009813eed88d9d44b65d7519b3cc083, type: 3}
+  meteoritePrefab: {fileID: -228454419532049775, guid: 9009813eed88d9d44b65d7519b3cc083, type: 3}
   fallDuration: 5
   spawnHeight: 30
   impactRadius: 2
-  damage: 30
+  damage: 10
   knockBackData:
     Force: 0
     Duration: 0
@@ -117,3 +117,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   decalProjector: {fileID: 2553479020859044712}
+  redMaterial: {fileID: 2100000, guid: 6fa4850a541128d48bfbc04a3bc69e1c, type: 2}
+  greenMaterial: {fileID: 2100000, guid: cc17186043141534ab4c4c949f9a53f8, type: 2}
+  blueMaterial: {fileID: 2100000, guid: ed111c0ed7848c048bb83204470661b2, type: 2}
+  yellowMaterial: {fileID: 2100000, guid: 60a93afd413de0940ba244d9041d4210, type: 2}
+  orangeMaterial: {fileID: 2100000, guid: 07679d26da570694eb8d97478058d328, type: 2}
+  purpleMaterial: {fileID: 2100000, guid: 6447793dec8f9244a90658abbe5f2208, type: 2}

@@ -696,7 +696,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   type: 4
   typeDamageBonus: 0
-  attackDamage: 15
+  attackDamage: 8
   attackCooldown: 3
   contactDamage: 5
   knockBackForce: 15
