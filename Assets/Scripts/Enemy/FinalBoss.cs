@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class FinalBoss : BossController
@@ -11,14 +12,27 @@ public class FinalBoss : BossController
     [SerializeField] private float tornadoWindDown = 1f;
     [SerializeField] private float tornadoMaxSpeed = 360f;
     [SerializeField] private float tornadoMoveSpeed = 8f;
+    
+    [Header("Meteorite Strike")]
+    [SerializeField] private MeteoriteStrike meteoriteStrikePrefab;
+    [SerializeField] private float meteoriteDuration = 10f;
+    [SerializeField] private float meteoriteInterval = 1.5f;
+    [SerializeField] private float meteoriteMinSpawnRadius = 3f;
+    [SerializeField] private float meteoriteMaxSpawnRadius = 8f;
+    
+    [Header("Camera Shake")]
+    [SerializeField] private CameraShakeData cameraShakeData;
+    
 
     protected override void InitStateMachine()
     {
         _stateMachine.Init(new BossPatternState(this, _stateMachine, new BossPattern[]
         {
+            new WaitPattern(2f),
             new ChasePattern(5f),
             new TornadoPattern(tornadoRotate, tornadoHitbox, tornadoParticles, tornadoWindUp, tornadoActiveDuration, tornadoWindDown, tornadoMaxSpeed, tornadoMoveSpeed),
             new WaitPattern(2f),
+            new AttackPattern("Meteorite")
         }));
     }
 
@@ -26,8 +40,39 @@ public class FinalBoss : BossController
     {
         new BossPhase(0.5f, new BossPattern[]
         {
-            new ChasePattern(5f),
             new WaitPattern(1f),
+            new ChasePattern(2f),
+            new TornadoPattern(tornadoRotate, tornadoHitbox, tornadoParticles, tornadoWindUp, tornadoActiveDuration, tornadoWindDown, tornadoMaxSpeed, tornadoMoveSpeed),
+            new WaitPattern(1f),
+            new AttackPattern("Meteorite"),
+            new AttackPattern("Meteorite"),
+            new TornadoPattern(tornadoRotate, tornadoHitbox, tornadoParticles, tornadoWindUp, tornadoActiveDuration, tornadoWindDown, tornadoMaxSpeed, tornadoMoveSpeed),
+            new AttackPattern("Meteorite")
         })
     };
+    
+    public void Shake() => CameraShakeManager.Instance.Shake(cameraShakeData);
+
+    public void PlayMeteoriteStrikes() => StartCoroutine(MeteoriteStrikesRoutine());
+
+    private IEnumerator MeteoriteStrikesRoutine()
+    {
+        float timer = meteoriteDuration;
+        while (timer > 0f)
+        {
+            SpawnMeteoriteStrike();
+            yield return new WaitForSeconds(meteoriteInterval);
+            timer -= meteoriteInterval;
+        }
+    }
+
+    private void SpawnMeteoriteStrike()
+    {
+        Vector2 offset = Random.insideUnitCircle.normalized * Random.Range(meteoriteMinSpawnRadius, meteoriteMaxSpawnRadius);
+        Vector3 position = transform.position + new Vector3(offset.x, 0f, offset.y);
+        TypeColor[] types = { TypeColor.RED, TypeColor.GREEN, TypeColor.BLUE, TypeColor.YELLOW, TypeColor.ORANGE, TypeColor.PURPLE };
+        TypeColor type = types[Random.Range(0, types.Length)];
+        var strike = Instantiate(meteoriteStrikePrefab, position, Quaternion.identity);
+        strike.Init(position, this, type);
+    }
 }
