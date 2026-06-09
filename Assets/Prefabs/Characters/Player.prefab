@@ -1053,8 +1053,8 @@ GameObject:
   m_Component:
   - component: {fileID: 766771613913959367}
   - component: {fileID: 1215283123474035949}
-  m_Layer: 8
-  m_Name: CurrencyHitbox
+  m_Layer: 11
+  m_Name: LootHitbox
   m_TagString: PlayerCurrency
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1211,7 +1211,7 @@ MonoBehaviour:
   PivotOffset: {x: 0, y: 0, z: 0}
   AmplitudeGain: 0
   FrequencyGain: 0
-  m_NoiseOffsets: {x: 0, y: 0, z: 0}
+  m_NoiseOffsets: {x: 194.25977, y: -332.69058, z: -454.2357}
 --- !u!114 &815843111527562392
 MonoBehaviour:
   m_ObjectHideFlags: 0
