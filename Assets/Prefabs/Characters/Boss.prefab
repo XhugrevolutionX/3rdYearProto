@@ -379,6 +379,7 @@ MonoBehaviour:
   tornadoActiveDuration: 7
   tornadoWindDown: 3
   tornadoMaxSpeed: 1000
+  tornadoMoveSpeed: 8
 --- !u!114 &6688503276505838144
 MonoBehaviour:
   m_ObjectHideFlags: 0
