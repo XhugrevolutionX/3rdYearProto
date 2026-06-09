@@ -35,7 +35,13 @@ public class PlayerController : Controller
 
     #endregion
 
-    private void Awake() => playerController = this;
+    public Movement Movement { get; private set; }
+
+    private void Awake()
+    {
+        playerController = this;
+        Movement = GetComponent<Movement>();
+    }
 
     private void OnEnable()  => MiniBossHealth.OnMiniBossDeath += AddType;
     private void OnDisable() => MiniBossHealth.OnMiniBossDeath -= AddType;

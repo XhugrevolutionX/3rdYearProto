@@ -6,11 +6,11 @@ public class EnemyController : Controller
     [SerializeField] private int contactDamage = 1;
 
     [Header("KnockBack")]
-    [SerializeField] private float knockBackForce = 10f;
-    [SerializeField] private float knockBackDuration = 0.5f;
+    [SerializeField] protected float knockBackForce = 10f;
+    [SerializeField] protected float knockBackDuration = 0.5f;
     
     [Header("Detection")]
-    [SerializeField] private float detectionRadius = 10f;
+    [SerializeField] protected float detectionRadius = 10f;
     [SerializeField] private float attackRange = 2f;
     [SerializeField] private LayerMask playerMask;
 

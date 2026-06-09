@@ -75,4 +75,12 @@ public class FinalBoss : BossController
         var strike = Instantiate(meteoriteStrikePrefab, position, Quaternion.identity);
         strike.Init(position, this, type);
     }
+
+    public void KnockBackPlayer()
+    {
+        if (!PlayerTransform) return;
+        if (Vector3.Distance(transform.position, PlayerTransform.position) > detectionRadius) return;
+        Vector3 direction = (PlayerTransform.position - transform.position).normalized;
+        PlayerController.playerController.Movement.KnockBack(direction, knockBackForce, knockBackDuration);
+    }
 }
