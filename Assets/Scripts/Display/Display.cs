@@ -30,6 +30,7 @@ public class Display : MonoBehaviour
     private void Update() => healthBarSlider.value = Mathf.Lerp(healthBarSlider.value, _health.CurrentHealth, healthBarLerpSpeed);
 
     public void Attack() => _animator.SetTrigger("Attack");
+    public void PlayAnimation(string triggerName) => _animator.SetTrigger(triggerName);
     
     private void UpdateHealthTmp() => healthTmp.SetText(_health.CurrentHealth.ToString());
 }
