@@ -32,6 +32,8 @@ public class BossController : EnemyController
 
     protected override void Start()
     {
+        PlayerTransform = PlayerController.playerController.transform;
+        
         base.Start();
         _typeDisplay = GetComponent<TypeDisplay>();
         _health = GetComponent<Health>();
@@ -41,10 +43,13 @@ public class BossController : EnemyController
 
         _health.OnHealthChanged += CheckPhaseTransitions;
 
+
         if (types.Count > 0) StartCoroutine(TypeSwitchRoutine());
     }
 
     private void OnDestroy() => _health.OnHealthChanged -= CheckPhaseTransitions;
+
+    protected override void DetectPlayer() { }
 
     protected virtual BossPhase[] CreatePhases() => Array.Empty<BossPhase>();
 

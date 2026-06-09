@@ -14,6 +14,7 @@ public class Movement : MonoBehaviour
     [Header("Dash")]
     [SerializeField] private KnockBackData dash = new() { Force = 20f, Duration = 0.2f };
     
+    public float Speed { get => speed; set => speed = value; }
     public bool IsKnockedBack => _isKnockedBack;
     public bool IsRotationLocked => _isRotationLocked;
     public Vector3 Forward => viewTransform ? viewTransform.forward : transform.forward;

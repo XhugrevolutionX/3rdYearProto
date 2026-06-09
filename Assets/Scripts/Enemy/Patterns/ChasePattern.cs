@@ -16,7 +16,11 @@ public class ChasePattern : BossPattern
     public override void Tick(BossController boss)
     {
         if (boss.PlayerTransform)
+        {
+            float dist = Vector3.Distance(boss.transform.position, boss.PlayerTransform.position);
+            if (dist <= boss.AttackRange) { IsComplete = true; return; }
             boss.Movement.SetTarget(boss.PlayerTransform.position);
+        }
 
         _timer -= Time.deltaTime;
         if (_timer <= 0f) IsComplete = true;

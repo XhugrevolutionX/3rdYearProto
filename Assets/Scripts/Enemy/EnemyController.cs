@@ -19,7 +19,7 @@ public class EnemyController : Controller
     public bool AttackIgnoresKnockBack => attackIgnoresKnockBack;
 
     public EnemyMovement Movement { get; private set; }
-    public Transform PlayerTransform { get; private set; }
+    public Transform PlayerTransform { get; protected set; }
     public float AttackRange => attackRange;
     public bool CanAttack => canAttack;
 
@@ -58,7 +58,7 @@ public class EnemyController : Controller
         DetectPlayer();
     }
 
-    private void DetectPlayer()
+    protected virtual void DetectPlayer()
     {
         Collider[] hits = Physics.OverlapSphere(transform.position, detectionRadius, playerMask);
         PlayerTransform = hits.Length > 0 ? hits[0].transform : null;
@@ -74,8 +74,6 @@ public class EnemyController : Controller
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(Movement.IsKnockedBack) return;
-        
         CombatUtils.ApplyHit<PlayerHealth>(collision.gameObject,
             this, 
             contactDamage,
