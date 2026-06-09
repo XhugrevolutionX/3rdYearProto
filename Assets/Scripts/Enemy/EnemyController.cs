@@ -15,6 +15,10 @@ public class EnemyController : Controller
     [SerializeField] private float attackOrientationLockDuration = 0.3f;
     [SerializeField] private LayerMask playerMask;
 
+    [Header("Combat")]
+    [SerializeField] private bool attackIgnoresKnockback = false;
+    public bool AttackIgnoresKnockback => attackIgnoresKnockback;
+
     public EnemyMovement Movement { get; private set; }
     public Transform PlayerTransform { get; private set; }
     public float AttackRange => attackRange;

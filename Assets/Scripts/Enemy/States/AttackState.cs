@@ -11,7 +11,7 @@ public class AttackState : AIState
 
     public override void Update()
     {
-        if (_ai.Movement.IsKnockedBack)
+        if (!_ai.AttackIgnoresKnockback && _ai.Movement.IsKnockedBack)
         {
             _stateMachine.ChangeState(new ChaseState(_ai, _stateMachine));
             return;

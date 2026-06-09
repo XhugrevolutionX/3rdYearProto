@@ -10,6 +10,9 @@ public class Movement : MonoBehaviour
     [SerializeField] private float speed = 5f;
     [SerializeField] protected float rotationSpeed = 10f;
     [SerializeField] private float knockBackResistance = 5f;
+
+    [Header("Dash")]
+    [SerializeField] private KnockBackData dash = new() { Force = 20f, Duration = 0.2f };
     
     public bool IsKnockedBack => _isKnockedBack;
     public bool IsRotationLocked => _isRotationLocked;
@@ -88,4 +91,6 @@ public class Movement : MonoBehaviour
         Quaternion targetRotation = Quaternion.LookRotation(moveDir);
         viewTransform.rotation = Quaternion.Slerp(viewTransform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
     }
+
+    public void DashForward() => KnockBack(Forward, dash.Force, dash.Duration);
 }
