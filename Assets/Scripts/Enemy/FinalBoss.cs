@@ -5,6 +5,7 @@ public class FinalBoss : BossController
     [Header("Tornado Attack")]
     [SerializeField] private Rotate tornadoRotate;
     [SerializeField] private Collider tornadoHitbox;
+    [SerializeField] private ParticleSystem tornadoParticles;
     [SerializeField] private float tornadoWindUp = 1.5f;
     [SerializeField] private float tornadoActiveDuration = 4f;
     [SerializeField] private float tornadoWindDown = 1f;
@@ -16,7 +17,7 @@ public class FinalBoss : BossController
         _stateMachine.Init(new BossPatternState(this, _stateMachine, new BossPattern[]
         {
             new ChasePattern(5f),
-            new TornadoPattern(tornadoRotate, tornadoHitbox, tornadoWindUp, tornadoActiveDuration, tornadoWindDown, tornadoMaxSpeed, tornadoMoveSpeed),
+            new TornadoPattern(tornadoRotate, tornadoHitbox, tornadoParticles, tornadoWindUp, tornadoActiveDuration, tornadoWindDown, tornadoMaxSpeed, tornadoMoveSpeed),
             new WaitPattern(2f),
         }));
     }

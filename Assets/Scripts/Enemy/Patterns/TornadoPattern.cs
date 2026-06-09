@@ -6,6 +6,7 @@ public class TornadoPattern : BossPattern
 
     private readonly Rotate _rotate;
     private readonly Collider _hitbox;
+    private readonly ParticleSystem _particles;
     private readonly float _windUpDuration;
     private readonly float _activeDuration;
     private readonly float _windDownDuration;
@@ -17,10 +18,11 @@ public class TornadoPattern : BossPattern
     private float _originalMoveSpeed;
     private Quaternion _originalRotation;
 
-    public TornadoPattern(Rotate rotate, Collider hitbox, float windUp, float active, float windDown, float maxSpeed, float moveSpeed)
+    public TornadoPattern(Rotate rotate, Collider hitbox, ParticleSystem particles, float windUp, float active, float windDown, float maxSpeed, float moveSpeed)
     {
         _rotate = rotate;
         _hitbox = hitbox;
+        _particles = particles;
         _windUpDuration = windUp;
         _activeDuration = active;
         _windDownDuration = windDown;
@@ -85,9 +87,10 @@ public class TornadoPattern : BossPattern
         _rotate.enabled = false;
         _rotate.Speed = Vector3.zero;
         _hitbox.enabled = false;
+        _particles?.Stop();
         boss.Movement.Speed = _originalMoveSpeed;
         boss.Movement.StopMoving();
-        base.End(boss); // also handles interruption mid-tornado
+        base.End(boss);
     }
 
     private void EnterActive(BossController boss)
@@ -96,6 +99,7 @@ public class TornadoPattern : BossPattern
         _timer = _activeDuration;
         _rotate.Speed = Vector3.forward * _maxSpeed;
         _hitbox.enabled = true;
+        _particles?.Play();
     }
 
     private void EnterWindDown(BossController boss)
@@ -103,6 +107,7 @@ public class TornadoPattern : BossPattern
         _phase = Phase.WindDown;
         _timer = _windDownDuration;
         _hitbox.enabled = false;
+        _particles?.Stop();
     }
 
     private void EnterRecover()
