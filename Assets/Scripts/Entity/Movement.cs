@@ -59,20 +59,7 @@ public class Movement : MonoBehaviour
 
     private void Move() => _rb.linearVelocity = new Vector3(_direction.x * speed, _rb.linearVelocity.y, _direction.y * speed);
 
-    public void LockRotation(float duration)
-    {
-        if (_lockRotationCoroutine != null) StopCoroutine(_lockRotationCoroutine);
-        _lockRotationCoroutine = StartCoroutine(LockRotationRoutine(duration));
-    }
-
-    private Coroutine _lockRotationCoroutine;
-
-    private IEnumerator LockRotationRoutine(float duration)
-    {
-        _isRotationLocked = true;
-        yield return new WaitForSeconds(duration);
-        _isRotationLocked = false;
-    }
+    public void SetRotationLocked(bool locked) => _isRotationLocked = locked;
 
     public void RotateToward(Vector3 target)
     {

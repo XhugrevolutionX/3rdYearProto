@@ -703,11 +703,10 @@ MonoBehaviour:
   knockBackDuration: 0.75
   detectionRadius: 28
   attackRange: 6
-  attackOrientationLockDuration: 2
   playerMask:
     serializedVersion: 2
     m_Bits: 8
-  attackIgnoresKnockback: 1
+  attackIgnoresKnockBack: 1
 --- !u!114 &6688503276505838144
 MonoBehaviour:
   m_ObjectHideFlags: 0

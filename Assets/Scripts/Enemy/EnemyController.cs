@@ -12,18 +12,20 @@ public class EnemyController : Controller
     [Header("Detection")]
     [SerializeField] private float detectionRadius = 10f;
     [SerializeField] private float attackRange = 2f;
-    [SerializeField] private float attackOrientationLockDuration = 0.3f;
     [SerializeField] private LayerMask playerMask;
 
     [Header("Combat")]
-    [SerializeField] private bool attackIgnoresKnockback = false;
-    public bool AttackIgnoresKnockback => attackIgnoresKnockback;
+    [SerializeField] private bool attackIgnoresKnockBack;
+    public bool AttackIgnoresKnockBack => attackIgnoresKnockBack;
 
     public EnemyMovement Movement { get; private set; }
     public Transform PlayerTransform { get; private set; }
     public float AttackRange => attackRange;
-    public float AttackOrientationLockDuration => attackOrientationLockDuration;
     public bool CanAttack => canAttack;
+
+    // called by animation events
+    public void LockOrientation()   => Movement.SetRotationLocked(true);
+    public void UnlockOrientation() => Movement.SetRotationLocked(false);
 
     public void PerformAttack()
     {

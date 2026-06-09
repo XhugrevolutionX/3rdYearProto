@@ -7,13 +7,14 @@ public class AttackState : AIState
     public override void Enter()
     {
         _ai.Movement.StopMoving();
-        _ai.Movement.LockRotation(_ai.AttackOrientationLockDuration);
         _ai.PerformAttack();
     }
 
+    public override void Exit() => _ai.Movement.SetRotationLocked(false);
+
     public override void Update()
     {
-        if (!_ai.AttackIgnoresKnockback && _ai.Movement.IsKnockedBack)
+        if (!_ai.AttackIgnoresKnockBack && _ai.Movement.IsKnockedBack)
         {
             _stateMachine.ChangeState(new ChaseState(_ai, _stateMachine));
             return;
