@@ -702,8 +702,8 @@ MonoBehaviour:
   knockBackForce: 15
   knockBackDuration: 0.75
   detectionRadius: 28
-  attackRange: 4
-  attackOrientationLockDuration: 0.3
+  attackRange: 6
+  attackOrientationLockDuration: 2
   playerMask:
     serializedVersion: 2
     m_Bits: 8
@@ -751,8 +751,8 @@ MonoBehaviour:
   rotationSpeed: 3
   knockBackResistance: 10
   dash:
-    Force: 20
-    Duration: 0.2
+    Force: 50
+    Duration: 0.75
 --- !u!114 &4684961557870353174
 MonoBehaviour:
   m_ObjectHideFlags: 0
