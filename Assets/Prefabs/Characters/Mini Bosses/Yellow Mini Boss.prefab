@@ -930,6 +930,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6421805334663651063, guid: be2c194f6bac75648b074d4e588a27c0, type: 3}
+      propertyPath: moveWithTransform
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8903082984928518484, guid: be2c194f6bac75648b074d4e588a27c0, type: 3}
       propertyPath: m_Name
       value: Slash2
@@ -1008,6 +1012,10 @@ PrefabInstance:
     - target: {fileID: 3498183984017049544, guid: be2c194f6bac75648b074d4e588a27c0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6421805334663651063, guid: be2c194f6bac75648b074d4e588a27c0, type: 3}
+      propertyPath: moveWithTransform
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8903082984928518484, guid: be2c194f6bac75648b074d4e588a27c0, type: 3}
       propertyPath: m_Name

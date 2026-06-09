@@ -148,7 +148,7 @@ public class GridGenerator : MonoBehaviour
 
     // ── Lifecycle ─────────────────────────────────────────────────────────────
 
-    private void Start()
+    private void Awake()
     {
         if (_gridSaveData == null || !_gridSaveData.hasData)
         {
