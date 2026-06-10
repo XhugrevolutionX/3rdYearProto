@@ -26,6 +26,7 @@ public class BossController : EnemyController
     }
 
     public bool AttackAnimationDone { get; private set; }
+    public bool IsActivated { get; protected set; }
 
     private Health _health;
     private BossPhase[] _phases = Array.Empty<BossPhase>();

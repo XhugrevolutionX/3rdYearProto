@@ -51,6 +51,13 @@ public class FinalBoss : BossController
         })
     };
     
+    protected override void DetectPlayer()
+    {
+        if (IsActivated) return;
+        if (Vector3.Distance(transform.position, PlayerTransform.position) <= detectionRadius)
+            IsActivated = true;
+    }
+
     public void Shake() => CameraShakeManager.Instance.Shake(cameraShakeData);
 
     public void PlayMeteoriteStrikes() => StartCoroutine(MeteoriteStrikesRoutine());

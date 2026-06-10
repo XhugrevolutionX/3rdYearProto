@@ -18,6 +18,7 @@ public class BossPatternState : BossAIState
 
     public override void Update()
     {
+        if (!_boss.IsActivated) return;
         Current.Tick(_boss);
 
         if (!Current.IsComplete) return;
